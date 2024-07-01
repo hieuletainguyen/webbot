@@ -6,7 +6,7 @@ import {
   Route 
 } from "react-router-dom";
 import Home from "./components/Home";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavigatorBar";
 import Controller from "./components/Controller";
 import CodingSpace from "./components/CodingSpace";
 import Signin from "./components/Signin";
@@ -23,13 +23,25 @@ function App() {
 
   return (
     <div className="container">
-      <NavBar isLoggedIn={isLoggedIn}/>
+      <Router>
+        <NavBar isLoggedIn={isLoggedIn}/>
 
-      <Camera webcamRef={webcamRef} height={500} width={500}/>
+        {/* <Camera webcamRef={webcamRef} height={500} width={500}/> */}
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+
+          <Route path="/control" element={<Controller />} />
+
+          <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+
+          <Route path="/sign-up" element={<Signup />} />
+
+          <Route path="/profile" element={<UserProfile />} />
+
+          <Route path="/code-space" element={<CodingSpace /> } />
+        </Routes>
+      </Router>
 
     </div>
 

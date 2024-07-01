@@ -41,7 +41,7 @@
     height: 40px;
     background: #00bfb2;
     border-radius: 50px;
-    transition: left 300ms cubic-bezier(1, -0.5, 0, 1.5);
+    transition: right 300ms cubic-bezier(1, -0.5, 0, 1.5);
     border-top: 5px solid #000;
     border-bottom: 5px solid #000;
     border-left: 5px solid #fa742b;
