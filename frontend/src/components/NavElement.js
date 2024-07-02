@@ -12,7 +12,7 @@ export const Navbar = styled.div`
   height: 60px;
   min-width: 700px;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
