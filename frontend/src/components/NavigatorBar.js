@@ -43,19 +43,27 @@ export default function NavBar(props) {
             </StyledNavLink>
           </NavItem>
 
-          <NavItem>
+          {/* <NavItem>
             <StyledNavLink to="/code-space" activeClassName="active">
               CODE SPACE
             </StyledNavLink>
-          </NavItem>
+          </NavItem> */}
 
-          {isLoggedIn.status ? (
+          {/* {isLoggedIn.status ? (
             <NavItem>
               <StyledNavLink to="/profile" activeClassName="active">
                 PROFILE
               </StyledNavLink>
             </NavItem>
           ) : (
+            <NavItem >
+              <StyledNavLink to="/sign-in" activeClassName="active">
+                SIGN IN
+              </StyledNavLink>
+            </NavItem>
+          )} */}
+
+          {!isLoggedIn.status && (
             <NavItem >
               <StyledNavLink to="/sign-in" activeClassName="active">
                 SIGN IN

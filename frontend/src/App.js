@@ -38,7 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route path="/control" element={<Controller armData={armData} setArmData={setArmData}/>} />
+          <Route path="/control" element={<Controller isLoggedIn={isLoggedIn} armData={armData} setArmData={setArmData}/>} />
 
           <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
 

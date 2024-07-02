@@ -1,0 +1,14 @@
+
+.notsignin {
+    display: flex;
+    border-radius: 18px;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 100px ;
+    font-weight: bold;
+    border: 8px solid grey;
+    margin-left: 50px;
+    margin-right: 50px;
+
+}

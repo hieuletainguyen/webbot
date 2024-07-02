@@ -7,7 +7,7 @@ export default function Home() {
             <div className="main-container">
 
                 
-                    <h1 className='block1'>Title 1</h1>
+                    <h1 className='block1'>Introduction</h1>
                     <p className="description1">
                         <table>
                             <tr>
@@ -23,11 +23,61 @@ export default function Home() {
                     </p>
                 
                 
-                    <h1 className="block2">Title 2</h1>
-                    <p className="description2">Description 2</p>
+                    <h1 className="block2">Robot Arm</h1>
+                    <div className="description2">
+                                
+                        <img className="sub-block-img" src="/pictures/robot_arm1.jpg" />
+                        
+                        <table>
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
 
-                    <h1 className="block3">Title 3</h1>
-                    <p className="description3">Description 3</p>
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+                        </table>
+                            
+                    </div>
+
+                    <h1 className="block3">Vision</h1>
+                    <div className="description3">
+                    <img className="sub-block-img" src="/pictures/eye-to-hand.png" />
+                        
+                        <table>
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+
+                            <tr>
+                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
+                            </tr>
+                        </table>
+                    </div>
                 
             </div>
 
