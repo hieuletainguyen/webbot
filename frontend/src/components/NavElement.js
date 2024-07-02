@@ -3,7 +3,7 @@ import { NavLink as Link } from 'react-router-dom';
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  min-height: 15vh;
   position: relative;
   overflow-y: hidden;
 `;

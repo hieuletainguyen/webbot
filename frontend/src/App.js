@@ -1,4 +1,4 @@
-import Camera from "./components/Camera";
+
 import {useRef, useState} from "react";
 import {
   BrowserRouter as Router, 
@@ -15,23 +15,30 @@ import UserProfile from "./components/UserProfile";
 
 
 function App() {
-  const webcamRef = useRef(null);
+  const [armData, setArmData] = useState({
+    base: 0,
+    arm1: 0,
+    arm2: 0,
+    clawx: 0,
+    clawy: 0,
+    claw: 0
+  })
   const [isLoggedIn, setIsLoggedIn] = useState({
-    status: false,
+    status: true,
     username: null
   })
 
   return (
     <div className="container">
       <Router>
-        <NavBar isLoggedIn={isLoggedIn}/>
+        <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
 
-        {/* <Camera webcamRef={webcamRef} height={500} width={500}/> */}
+        
 
         <Routes>
           <Route path="/" element={<Home />} />
 
-          <Route path="/control" element={<Controller />} />
+          <Route path="/control" element={<Controller armData={armData} setArmData={setArmData}/>} />
 
           <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
 
