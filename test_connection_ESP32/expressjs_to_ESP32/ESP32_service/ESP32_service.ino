@@ -4,7 +4,7 @@
 
 const char* ssid = "Agiat Ikazinat";
 const char* password = "whaleclysdeo";
-String serverName = "http://104.155.160.33:9897/api/data";
+String serverName = "http://104.155.160.33:9897/get-data";
 
 void setup() {
   Serial.begin(115200);
@@ -33,21 +33,17 @@ void loop() {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
     http.begin(serverName.c_str());
-    http.addHeader("Content-Type", "application/json");
+    int httpCode = http.GET(); // Make the request
 
-    // Example of sending a JSON payload
-    String httpRequestData = "{\"sensor\":\"temperature\",\"value\":25}";
-    int httpResponseCode = http.POST(httpRequestData);
-
-    if (httpResponseCode > 0) {
-      String response = http.getString();
-      Serial.println(httpResponseCode);
-      Serial.println(response);
+    if (httpCode > 0) { // Check for the returning code
+      String payload = http.getString();
+      Serial.println("Received data: " + payload);
+      // Process the received data here
     } else {
-      Serial.print("Error on sending POST: ");
-      Serial.println(httpResponseCode);
+      Serial.println("Error on HTTP request");
     }
-    http.end();
+
+    http.end(); // Free the resources
   }
   delay(10000); // Send a request every 10 seconds
 }
