@@ -36,7 +36,7 @@ export default function Camera(props) {
             [name]: event.target.value
         }
         props.setArmData(newArmData);
-        const response = await fetch( `http://localhost:9897/arm-data`, {
+        const response = await fetch( `${process.env.BACKEND_SERVER_URL}/arm-data`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

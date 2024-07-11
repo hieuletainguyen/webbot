@@ -8,5 +8,9 @@ router.post("/arm-data",
     controll.movement
 )
 
+router.get("/get-arm-data",
+    controll.getArmData
+)
+
 module.exports = router;
 
