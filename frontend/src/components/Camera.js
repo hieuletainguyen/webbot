@@ -6,7 +6,8 @@ export default function Camera(props) {
     const webcamRef = useRef(null);
     const [isShow, setIsShow] = useState(false);
     const [imgSrc, setImgSrc] = useState(null);
-    const [sliderValues, setSliderValues] = useState(Array(6).fill(90));
+    const armData = props.armData;
+    
 
     const handleOnChange = () => {
 
@@ -29,10 +30,25 @@ export default function Camera(props) {
 
     }
 
-    const updateValue = (event, index) => {
-        const newValues = [...sliderValues];
-        newValues[index] = event.target.value;
-        setSliderValues(newValues);
+    const updateValue = async (event, name) => {
+        const newArmData = {
+            ...armData,
+            [name]: event.target.value
+        }
+        props.setArmData(newArmData);
+        const response = await fetch( `http://localhost:9897/arm-data`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            }, 
+            body: JSON.stringify(newArmData)
+          });
+    
+          if (response.status === 200){
+            console.log("Arm data sent successfully");
+          } else {
+            console.log(response);
+          }
     };
 
     return (
@@ -70,9 +86,9 @@ export default function Camera(props) {
                                     <td>Base</td>
                                     <td>
                                         <input type="range" min="0" max="180"  class="slider" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, 0)}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "base")}/>
                                     </td>
-                                    <td>{sliderValues[0]}</td>
+                                    <td>{armData.base}</td>
 
 
                                 </tr>
@@ -81,9 +97,9 @@ export default function Camera(props) {
                                     <td>Arm 1</td>
                                     <td>
                                         <input type="range" min="0" max="180"  class="slider" 
-                                                id="arm1Slider" onChange={(e) => updateValue(e, 1)}/>
+                                                id="arm1Slider" onChange={(e) => updateValue(e, "arm1")}/>
                                     </td>
-                                    <td>{sliderValues[1]}</td>
+                                    <td>{armData.arm1}</td>
 
 
                                 </tr>
@@ -92,9 +108,9 @@ export default function Camera(props) {
                                     <td>Arm 2</td>
                                     <td>
                                         <input type="range" min="0" max="180"  class="slider" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, 2)}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "arm2")}/>
                                     </td>
-                                    <td>{sliderValues[2]}</td>
+                                    <td>{armData.arm2}</td>
 
 
                                 </tr>
@@ -103,9 +119,9 @@ export default function Camera(props) {
                                     <td>Claw X</td>
                                     <td>
                                         <input type="range" min="0" max="180" class="slider" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, 3)}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "clawx")}/>
                                     </td>
-                                    <td>{sliderValues[3]}</td>
+                                    <td>{armData.clawx}</td>
 
 
                                 </tr>
@@ -114,9 +130,9 @@ export default function Camera(props) {
                                     <td>Claw Y</td>
                                     <td>
                                         <input type="range" min="0" max="180" class="slider" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, 4)}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "clawy")}/>
                                     </td>
-                                    <td>{sliderValues[4]}</td>
+                                    <td>{armData.clawy}</td>
 
 
                                 </tr>
@@ -125,9 +141,9 @@ export default function Camera(props) {
                                     <td>Claw</td>
                                     <td>
                                         <input type="range" min="0" max="180" class="slider" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, 5)}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "claw")}/>
                                     </td>
-                                    <td>{sliderValues[5]}</td>
+                                    <td>{armData.claw}</td>
 
 
                                 </tr>

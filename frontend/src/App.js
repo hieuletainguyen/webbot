@@ -1,5 +1,5 @@
 
-import {useRef, useState} from "react";
+import {useRef, useEffect, useState} from "react";
 import {
   BrowserRouter as Router, 
   Routes, 
@@ -16,17 +16,19 @@ import UserProfile from "./components/UserProfile";
 
 function App() {
   const [armData, setArmData] = useState({
-    base: 0,
-    arm1: 0,
-    arm2: 0,
-    clawx: 0,
-    clawy: 0,
-    claw: 0
+    "base": 49,
+    "arm1": 49,
+    "arm2": 49,
+    "clawx": 49,
+    "clawy": 49,
+    "claw": 49
   })
   const [isLoggedIn, setIsLoggedIn] = useState({
     status: true,
     username: null
   })
+
+
 
   return (
     <div className="container">

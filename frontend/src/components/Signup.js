@@ -9,7 +9,7 @@ export default function Signup (props) {
     const navigate = useNavigate();
 
     const addAccount = async() => {
-        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/add-account`, {
+        const result = await fetch(`${process.env.BACKEND_SERVER_URL}/add-account`, {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",

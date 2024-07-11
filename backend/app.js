@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 const init_routes = require("./routes/init_routes")
-const account_routes = require("./routes/account_routes")
+const account_routes = require("./routes/accounts_route")
 const controll_routes = require("./routes/controll_route")
 
 const port = 9897;

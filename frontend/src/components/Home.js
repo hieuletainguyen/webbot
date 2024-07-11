@@ -98,13 +98,18 @@ export default function Home() {
                 </div>
 
                 <div className="card">
-                    <img src="/pictures/postgresql.png" alt="react"/>
+                    <img src="/pictures/postgresql.png" alt="postgresql"/>
                     
                     <p>adsfasrgteg</p>
                 </div>
 
                 <div className="card">
-                    <img src="/pictures/opencv1.png" alt="react"/>
+                    <img src="/pictures/opencv1.png" alt="opencv1"/>
+                    <p>adfafgrcgr</p>
+                </div>
+
+                <div className="card">
+                    <img src="/pictures/gcp.png" alt="gcp"/>
                     <p>adfafgrcgr</p>
                 </div>
 

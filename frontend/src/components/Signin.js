@@ -9,7 +9,7 @@ export default function Signin(props) {
     const navigate = useNavigate();
 
     const validate = async () => {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
+        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/auth`, {
             method: "POST", 
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, password})

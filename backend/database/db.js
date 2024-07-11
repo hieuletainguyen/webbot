@@ -2,7 +2,7 @@ const { Client } = require('pg');
 
 require("dotenv").config();
 
-const client = new Client({
+const database = new Client({
     user: process.env.DB_USER || 'postgres',
     host: process.env.DB_HOST || "postgres-container",
     database: process.env.DB_NAME || "robot_accounts", 
@@ -10,4 +10,4 @@ const client = new Client({
     port: 5432
 })
 
-module.exports = client;
+module.exports = database;
