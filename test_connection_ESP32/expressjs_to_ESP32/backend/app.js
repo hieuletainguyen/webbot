@@ -16,3 +16,5 @@ app.get('/get-data', (req, res) => {
 app.listen(port, () => {
   console.log(`Express server running at http://localhost:${port}`);
 });
+
+module.exports = app;
