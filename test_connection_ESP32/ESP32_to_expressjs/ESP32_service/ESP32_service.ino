@@ -4,7 +4,7 @@
 
 const char* ssid = "Agiat Ikazinat";
 const char* password = "whaleclysdeo";
-String serverName = "http://104.155.160.33:9897/api/data";
+String serverName = "http://34.171.37.115:9897/api/data";
 
 void setup() {
   Serial.begin(115200);

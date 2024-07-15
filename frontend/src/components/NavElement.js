@@ -6,6 +6,7 @@ export const Container = styled.div`
   min-height: 15vh;
   position: relative;
   overflow-y: hidden;
+  z-index: 10000000;
 `;
 
 export const Navbar = styled.div`

@@ -7,7 +7,9 @@ export default function Controller (props) {
     return (
         <>
             {props.isLoggedIn.status ?
-                <Camera armData={props.armData} setArmData={props.setArmData} webcamRef={webcamRef} height={700} width={700}/>
+                <Camera armData={props.armData} setArmData={props.setArmData} webcamRef={webcamRef} 
+                            imgSrc={props.imgSrc} setImgSrc={props.setImgSrc} 
+                            videoURL={props.videoURL} setVideoURL={props.setVideoURL}/>
                 :
                 <div className="notsignin"> 
                     You need to log in to control the robot

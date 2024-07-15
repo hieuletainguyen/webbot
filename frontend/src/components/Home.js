@@ -8,74 +8,80 @@ export default function Home() {
 
                 
                     <h1 className='block1'>Introduction</h1>
-                    <p className="description1">
+                    <div className="description1">
                         <table>
-                            <tr>
-                                - afadfasdf
-                            </tr>
-                            <tr>
-                                - asdggeye
-                            </tr>
-                            <tr>
-                                - afgreqrqe
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>- afadfasdf</td>
+                                </tr>
+                                <tr>
+                                    <td>- asdggeye</td>
+                                </tr>
+                                <tr>
+                                    <td>- afgreqrqe</td>
+                                </tr>
+                            </tbody>
                         </table>
-                    </p>
+                    </div>
                 
                 
                     <h1 className="block2">Robot Arm</h1>
                     <div className="description2">
                                 
-                        <img className="sub-block-img" src="/pictures/robot_arm1.jpg" />
+                        <img className="sub-block-img" alt="robot-arm" src="/pictures/robot_arm1.jpg" />
                         
                         <table>
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
+                            </tbody>
                         </table>
                             
                     </div>
 
                     <h1 className="block3">Vision</h1>
                     <div className="description3">
-                    <img className="sub-block-img" src="/pictures/eye-to-hand.png" />
-                        
+                        <img className="sub-block-img" alt="vision" src="/pictures/eye-to-hand.png" />
+                            
                         <table>
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                            <tbody>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
 
-                            <tr>
-                            <div>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</div>
-                            </tr>
+                                <tr>
+                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </div>
                 
@@ -110,6 +116,12 @@ export default function Home() {
 
                 <div className="card">
                     <img src="/pictures/gcp.png" alt="gcp"/>
+                    <p>adfafgrcgr</p>
+                </div>
+
+
+                <div className="card">
+                    <img src="/pictures/iot.jpg" alt="gcp"/>
                     <p>adfafgrcgr</p>
                 </div>
 

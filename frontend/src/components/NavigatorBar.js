@@ -8,21 +8,35 @@ import {
   StyledNavLink
 } from './NavElement';
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 export default function NavBar(props) {
-
   const isLoggedIn = props.isLoggedIn;
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-      localStorage.removeItem("user");
-      props.setIsLoggedIn({
-          ...props.isLoggedIn, 
-          status: false, 
-          username: "" 
+  const handleLogout = async () => {
+      const response = await fetch(`${process.env.BACKEND_SERVER_URL}/logout`, {
+        method: "POST",
+        credentials: "include", 
+        headers: {"Content-Type" : "application/json"}, 
+        body: JSON.stringify({
+          token: Cookies.get("ROBOT_TOKENS")
+        })
       })
-      navigate('/');
+
+      Cookies.remove("ROBOT_TOKENS");
+
+      if (response.ok){
+        props.setIsLoggedIn({
+            ...props.isLoggedIn, 
+            status: false, 
+            username: "" 
+        })
+        navigate('/');
+      } else {
+        console.log(response);
+      }
 
   }
 
@@ -32,32 +46,32 @@ export default function NavBar(props) {
         <NavList>
 
           <NavItem >
-            <StyledNavLink to="/" activeClassName="active">
+            <StyledNavLink to="/" activeclassname="active">
               HOME
             </StyledNavLink>
           </NavItem>
 
           <NavItem >
-            <StyledNavLink to="/control" activeClassName="active">
+            <StyledNavLink to="/control" activeclassname="active">
               CONTROL
             </StyledNavLink>
           </NavItem>
 
           {/* <NavItem>
-            <StyledNavLink to="/code-space" activeClassName="active">
+            <StyledNavLink to="/code-space" activeclassname="active">
               CODE SPACE
             </StyledNavLink>
           </NavItem> */}
 
           {/* {isLoggedIn.status ? (
             <NavItem>
-              <StyledNavLink to="/profile" activeClassName="active">
+              <StyledNavLink to="/profile" activeclassname="active">
                 PROFILE
               </StyledNavLink>
             </NavItem>
           ) : (
             <NavItem >
-              <StyledNavLink to="/sign-in" activeClassName="active">
+              <StyledNavLink to="/sign-in" activeclassname="active">
                 SIGN IN
               </StyledNavLink>
             </NavItem>
@@ -65,7 +79,7 @@ export default function NavBar(props) {
 
           {!isLoggedIn.status && (
             <NavItem >
-              <StyledNavLink to="/sign-in" activeClassName="active">
+              <StyledNavLink to="/sign-in" activeclassname="active">
                 SIGN IN
               </StyledNavLink>
             </NavItem>
@@ -74,7 +88,7 @@ export default function NavBar(props) {
 
           {!isLoggedIn.status ? 
             <NavItem>
-              <StyledNavLink to="/sign-up" activeClassName="active">
+              <StyledNavLink to="/sign-up" activeclassname="active">
                 SIGN UP
               </StyledNavLink>
             </NavItem>

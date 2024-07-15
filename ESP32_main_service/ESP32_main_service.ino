@@ -1,10 +1,11 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <WireGuard-ESP32.h>
+#include <ArduinoJson.h>
 
 const char* ssid = "Agiat Ikazinat";
 const char* password = "whaleclysdeo";
-String serverName = "http://34.68.65.7:9897/get-arm-data";
+String serverName = "http://34.71.112.134:9897/get-arm-data";
 
 void setup() {
   Serial.begin(115200);
@@ -39,6 +40,9 @@ void loop() {
       String payload = http.getString();
       Serial.println("Received data: " + payload);
       // Process the received data here
+
+      Static
+
     } else {
       Serial.println("Error on HTTP request");
     }

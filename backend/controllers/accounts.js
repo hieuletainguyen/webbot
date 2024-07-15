@@ -68,12 +68,12 @@ const authorization = async (req, res) => {
             
                 const token = jwt.sign({username: username}, jwtSecretkey, {expiresIn: "1h"});
 
-                const query1 = "INSERT INTO tokens (username, token) VALUES (?, ?)";
+                const query1 = "INSERT INTO tokens (token) VALUES (?)";
 
-                database.query(query1 , [username, token], (err, result) => {
+                database.query(query1 , [token], (err, result) => {
                     if (err) throw err;
 
-                    // res.cookie("BOOKSTORES_TOKEN", token, {maxAge: 900000});
+                    // res.cookie("ROBOT_TOKENS", token, {maxAge: 900000});
                     res.status(200).json({message: "success", token: token})
                     
 
@@ -98,23 +98,33 @@ const decode_token = (req, res) => {
             if (err) {
                 res.status(401).json({message: "Invalid token"})
             } else {
-                res.status(200).json({message: "success", username: decoded.username})
+
+                const query = "SELECT * FROM tokens WHERE token = ?";
+                database.query(query, [token], (err, result) => {
+                    if (err) throw err;
+
+                    if (result.length === 1) {
+                        res.status(200).json({message: "success", username: decoded.username})
+                    } else {
+                        res.status(401).json({message: "Invalid token"})
+                    }
+                })
             }
         })
     }
 };
 
 const logout = (req, res) => {
-    const {username, token} = req.body;
+    const {token} = req.body;
 
     if (token) {
-        const query = "DELETE FROM tokens WHERE token = ? AND username = ?";
-        database.query(query, [token, username], (err, result) => {
+        const query = "DELETE FROM tokens WHERE token = ?";
+        database.query(query, [token], (err, result) => {
             if (err) {
                 return res.status(500).send({message: "Server Error"});
             };
         });
-        res.clearCookie(username);
+        res.clearCookie("ROBOT_TOKENS");
         res.status(200).json({message: "Logged out successfully"});
     }
     

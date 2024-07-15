@@ -17,7 +17,6 @@ router.post("/auth",
 )
 
 router.post('/logout',
-    body("username").not().isEmpty().escape(), 
     account.logout
 )
 

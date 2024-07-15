@@ -19,10 +19,10 @@ sqlStatement.push(`
         blob_data OID,
     );
 
-    CREATE TABLE IF NOT EXISTS dead_tokens (
-        usernmae VARCHAR(50);
-        token VARCHAR(200);
+    CREATE TABLE IF NOT EXISTS tokens (
+        id int AUTO_INCREMENT,
+        token VARCHAR(200),
+        PRIMARY KEY (id)
     )
-
 `);
 

@@ -1,17 +1,18 @@
 import Webcam from "react-webcam";
-import {useRef, useState} from "react";
+import {useRef, useState, useEffect} from "react";
 import "./Camera.css"
 
 export default function Camera(props) {
+    const imgSrc = props.imgSrc;
+    const videoURL = props.videoURL;
     const webcamRef = useRef(null);
+    const mediaRecorderRef = useRef(null);
     const [isShow, setIsShow] = useState(false);
-    const [imgSrc, setImgSrc] = useState(null);
+    const [recording, setRecording] = useState(false);
+    const [recordedChunks, setRecordedChunks] = useState([]);
     const armData = props.armData;
     
 
-    const handleOnChange = () => {
-
-    }
 
     const handleStart = () => {
         setIsShow(true);
@@ -23,12 +24,77 @@ export default function Camera(props) {
 
     const handleSnapshot = () => {
         const imageSrc = webcamRef.current.getScreenshot();
-        setImgSrc(imageSrc);
+        props.setImgSrc(imageSrc);
     }
+
+    const downloadImage = () => {
+        const link = document.createElement('a');
+        link.href = imgSrc;
+        link.download = 'image.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    //==================== VIDEO RECORD ==================================================
 
     const handleRecord = () => {
+    
+        setRecordedChunks([]);
+        const stream = webcamRef.current.stream;
 
+        mediaRecorderRef.current = new MediaRecorder(stream, {
+            mimeType: "video/webm"
+        });
+
+        mediaRecorderRef.current.addEventListener(
+            "dataavailable", 
+            handleDataAvailable
+        );
+        mediaRecorderRef.current.start();
+
+        setRecording(true);
     }
+
+    const handleDataAvailable = (e) => {
+        if (e.data.size > 0) {
+            setRecordedChunks((prev) => prev.concat(e.data));
+            console.log('im here');
+            console.log(recordedChunks);
+        }
+        console.log(e.data);
+    }
+
+    const handleStopRecord = () => {
+        mediaRecorderRef.current.stop();
+        setRecording(false);
+
+        mediaRecorderRef.current.addEventListener("stop", () => {
+            const blob = new Blob(recordedChunks, { type: "video/webm" });
+            const url = URL.createObjectURL(blob);
+            props.setVideoURL(url);
+        });
+        
+    }
+
+
+
+    const downloadVideo = () => {
+        if (recordedChunks.length > 0) {
+            const blob = new Blob(recordedChunks, {
+                type: "video/webm"
+            });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'recorded-video.webm';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
+    // ====================================================================================
 
     const updateValue = async (event, name) => {
         const newArmData = {
@@ -51,27 +117,58 @@ export default function Camera(props) {
           }
     };
 
+
+    useEffect(() => {
+        if (recordedChunks.length > 0) {
+            const blob = new Blob(recordedChunks, { type: "video/webm" });
+            const url = URL.createObjectURL(blob);
+            props.setVideoURL(url);
+
+            // Clean up the URL object when the component unmounts
+            return () => {
+                URL.revokeObjectURL(url);
+            };
+        }
+    }, [recordedChunks]);
+
+
+
     return (
         <>
             <div className="camera-container">
-                <div className="camera-frame">
-                    
-                    {isShow ? <Webcam 
+                <div className="left-frame">
+                    <div className="camera-frame">
                         
-                        mirrored={true}
-                        audio={false}
-                        height="100%"
-                        width="100%" 
-                        imageSmoothing={true}
-                        ref={webcamRef} 
-                        screenshotFormat="image/jpeg"
-                        videoConstraints={{
-                            facingMode: 'user',
-                        }}
-                    /> : 
-                    <img src="../pictures/stop_image.jpg" width="100%" />
-                    }
+                        {isShow ? <Webcam 
+                            
+                            mirrored={true}
+                            audio={false}
+                            height="100%"
+                            width="100%" 
+                            imageSmoothing={true}
+                            ref={webcamRef} 
+                            screenshotFormat="image/jpeg"
+                            videoConstraints={{
+                                facingMode: 'user',
+                            }}
+                        /> : 
+                        <img src="../pictures/stop_image.jpg" width="100%" />
+                        }
 
+                    </div>
+
+                    <div className="buttonContainer">
+                        <button className="buttonCss" onClick={handleStart} disabled={isShow}>START</button>
+                        <button className="buttonCss" onClick={handleStop} disabled={!isShow}>STOP</button>
+                        
+                        {recording ? 
+                            <button className="buttonCss" onClick={handleStopRecord} disabled={!isShow}>STOP RECORD</button>
+                            :
+                            <button className="buttonCss" onClick={handleRecord} disabled={!isShow}>RECORD</button>
+                        }
+                        
+                        <button className="buttonCss" onClick={handleSnapshot} disabled={!isShow}>SNAPSHOT</button>
+                    </div>
                 </div>
 
                 <div className="right-frame">
@@ -85,7 +182,7 @@ export default function Camera(props) {
                                     
                                     <td>Base</td>
                                     <td>
-                                        <input type="range" min="0" max="180"  class="slider" 
+                                        <input type="range" min="0" max="180" 
                                                 id="baseSlider" onChange={(e) => updateValue(e, "base")}/>
                                     </td>
                                     <td>{armData.base}</td>
@@ -96,7 +193,7 @@ export default function Camera(props) {
                                 <tr className="control-row">
                                     <td>Arm 1</td>
                                     <td>
-                                        <input type="range" min="0" max="180"  class="slider" 
+                                        <input type="range" min="0" max="180"  
                                                 id="arm1Slider" onChange={(e) => updateValue(e, "arm1")}/>
                                     </td>
                                     <td>{armData.arm1}</td>
@@ -107,7 +204,7 @@ export default function Camera(props) {
                                 <tr className="control-row">
                                     <td>Arm 2</td>
                                     <td>
-                                        <input type="range" min="0" max="180"  class="slider" 
+                                        <input type="range" min="0" max="180"  
                                                 id="baseSlider" onChange={(e) => updateValue(e, "arm2")}/>
                                     </td>
                                     <td>{armData.arm2}</td>
@@ -118,7 +215,7 @@ export default function Camera(props) {
                                 <tr className="control-row">
                                     <td>Claw X</td>
                                     <td>
-                                        <input type="range" min="0" max="180" class="slider" 
+                                        <input type="range" min="0" max="180"
                                                 id="baseSlider" onChange={(e) => updateValue(e, "clawx")}/>
                                     </td>
                                     <td>{armData.clawx}</td>
@@ -129,7 +226,7 @@ export default function Camera(props) {
                                 <tr className="control-row">
                                     <td>Claw Y</td>
                                     <td>
-                                        <input type="range" min="0" max="180" class="slider" 
+                                        <input type="range" min="0" max="180"
                                                 id="baseSlider" onChange={(e) => updateValue(e, "clawy")}/>
                                     </td>
                                     <td>{armData.clawy}</td>
@@ -140,7 +237,7 @@ export default function Camera(props) {
                                 <tr className="control-row">
                                     <td>Claw</td>
                                     <td>
-                                        <input type="range" min="0" max="180" class="slider" 
+                                        <input type="range" min="0" max="180" 
                                                 id="baseSlider" onChange={(e) => updateValue(e, "claw")}/>
                                     </td>
                                     <td>{armData.claw}</td>
@@ -149,18 +246,35 @@ export default function Camera(props) {
                                 </tr>
                             </tbody>
                         </table>
+                       
                     </div>
+                    
+                         
+                    {imgSrc && 
+                        <>
+                            <img className='taking-image' src={imgSrc} />   
+                            <button className="buttonCss-right-frame" onClick={downloadImage}>Download</button> 
+                            <button className="buttonCss-right-frame" onClick={() => props.setImgSrc(null)}>Clear</button> 
+                        </>
+                    
+                    }
+                    
+                    {videoURL && 
+                        <>
+                            <video className='taking-image' src={videoURL} controls />
+                            <button className="buttonCss-right-frame" onClick={downloadVideo}>Download</button> 
+                            <button className="buttonCss-right-frame" onClick={() => {props.setVideoURL(null); setRecordedChunks([]);}}>Clear</button>
+                        </>
+                    }
+                    
+                    
 
                 </div> 
 
             </div>
             
-            <div className="buttonContainer">
-                <button className="buttonCss" onClick={handleStart} disabled={isShow}>START</button>
-                <button className="buttonCss" onClick={handleStop} disabled={!isShow}>STOP</button>
-                <button className="buttonCss" disabled={!isShow}>RECORD</button>
-                <button className="buttonCss" onClick={handleSnapshot} disabled={!isShow}>SNAPSHOT</button>
-            </div>
+            
+
         </>
     )
 };

@@ -2,6 +2,7 @@
     margin-top: 10px; /* Example: Adjust margin as needed */
     margin-right: 30px;
     margin-left: 30px;
+    
     display:flex;
   }
   
@@ -10,14 +11,30 @@
     align-items: center;
   }
   .camera-frame {
-    display: flex;
-    width: 49%;
+    display: grid;
+    width: 100%;
     height: 49%;
-    border: 4px solid silver;
     display: flex;
     text-align: center;
     vertical-align: middle;
     border-radius: 16px;
+    overflow: hidden; /* Ensures the webcam fits within the frame */
+    
+  }
+
+  .left-frame {
+    margin-right: 30px;
+    flex: 1;
+    display: flex;
+    width: 49%;
+    height: 49%;
+    border: 4px solid silver;
+    background-color: rgba(255, 255, 255, 0.3);
+    display: flex;
+    justify-content: flex-start; /* Aligns flex items horizontally along the main axis*/
+    border-radius: 16px;
+    align-items: center;
+    flex-direction: column;
     overflow: hidden; /* Ensures the webcam fits within the frame */
   }
 
@@ -28,12 +45,14 @@
     width: 49%;
     height: 49%;
     border: 4px solid silver;
+    background-color: rgba(255, 255, 255, 0.3);
     display: flex;
     justify-content: flex-start; /* Aligns flex items horizontally along the main axis*/
     border-radius: 16px;
     align-items: center;
     flex-direction: column;
     overflow: hidden; /* Ensures the webcam fits within the frame */
+
   }
 
   h2 {
@@ -42,15 +61,28 @@
   }
 
   .buttonContainer {
-    margin-left: 30px;
+    margin-top: 10px;
+
   }
+
   .buttonCss {
     background-color: silver; 
     text-align: center;
     font-size: 16px;
     font-weight: bold;
     border-radius: 10px;
-    width: 12%
+    width: 45%;
+    margin-bottom: 20px;
+  }
+
+  .buttonCss-right-frame {
+    background-color: silver; 
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    width: 12%;
+    margin-bottom: 20px;
   }
 
 .controller-table {
@@ -60,6 +92,7 @@
 
 .right-side {
   display: flex;
+  
 }
 
 .table-container {
@@ -71,4 +104,19 @@
 
 .control-row {
   font-weight:bold;
+}
+
+
+.taking-image {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 4px solid silver;
+  width: 60%;
+  border-radius: 18px;
+
+}
+
+.lower {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.8);
 }
