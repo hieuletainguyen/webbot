@@ -12,17 +12,24 @@ sqlStatement.push(`
         PRIMARY KEY (id)
     );
 
-    CREATE TABLE IF NOT EXISTS images (
-        id SERIAL PRIMARY KEY, 
-        filename VARCHAR(50), 
-        date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        blob_data OID,
-    );
-
     CREATE TABLE IF NOT EXISTS tokens (
         id int AUTO_INCREMENT,
         token VARCHAR(200),
         PRIMARY KEY (id)
+    )
+
+    CREATE TABLE IF NOT EXISTS image (
+        id int AUTO_INCREMENT,
+        username VARCHAR(50),
+        image BYTEA NOT NULL, 
+        time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    )
+
+    CREATE TABLE IF NOT EXISTS video (
+        id int AUTO_INCREMENT,
+        username VARCHAR(50),
+        video BYTEA NOT NULL,
+        time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )
 `);
 

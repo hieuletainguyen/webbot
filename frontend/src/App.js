@@ -30,6 +30,7 @@ function App() {
 
   const [imgSrc, setImgSrc] = useState(null);
   const [videoURL, setVideoURL] = useState(null);
+  const [videoBlob, setVideoBlob] = useState(null);
 
 
 
@@ -44,7 +45,7 @@ function App() {
           <Route path="/" element={<Home />} />
 
           <Route path="/control" element={<Controller isLoggedIn={isLoggedIn} armData={armData} setArmData={setArmData} imgSrc={imgSrc} setImgSrc={setImgSrc}
-                                                      videoURL={videoURL} setVideoURL={setVideoURL}/>} />
+                                                      videoURL={videoURL} setVideoURL={setVideoURL} videoBlob={videoBlob} setVideoBlob={setVideoBlob}/>} />
 
           <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
 

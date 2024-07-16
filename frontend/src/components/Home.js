@@ -125,6 +125,16 @@ export default function Home() {
                     <p>adfafgrcgr</p>
                 </div>
 
+                <div className="card">
+                    <img src="/pictures/docker-compose.png" alt="docker-compose"/>
+                    <p>adfafgrcgr</p>
+                </div>
+
+                <div className="card">
+                    <img src="/pictures/docker.png" alt="docker-compose"/>
+                    <p>adfafgrcgr</p>
+                </div>
+
             </div>
         </>
     )

@@ -1,10 +1,12 @@
 import Webcam from "react-webcam";
 import {useRef, useState, useEffect} from "react";
 import "./Camera.css"
+import Cookies from "js-cookie"
 
 export default function Camera(props) {
     const imgSrc = props.imgSrc;
     const videoURL = props.videoURL;
+    const videoBlob = props.videoBlob;
     const webcamRef = useRef(null);
     const mediaRecorderRef = useRef(null);
     const [isShow, setIsShow] = useState(false);
@@ -12,7 +14,6 @@ export default function Camera(props) {
     const [recordedChunks, setRecordedChunks] = useState([]);
     const armData = props.armData;
     
-
 
     const handleStart = () => {
         setIsShow(true);
@@ -25,6 +26,7 @@ export default function Camera(props) {
     const handleSnapshot = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         props.setImgSrc(imageSrc);
+
     }
 
     const downloadImage = () => {
@@ -36,6 +38,22 @@ export default function Camera(props) {
         document.body.removeChild(link);
     }
 
+    const saveImage = async () => {
+        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/save-image`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                token: Cookies.get("ROBOT_TOKENS"),
+                base64_image: imgSrc
+            })
+        });
+
+        if (response.ok) {
+            props.setImgSrc(null);
+            window.alert("Image Save Successfully");
+        }
+
+    }
     //==================== VIDEO RECORD ==================================================
 
     const handleRecord = () => {
@@ -71,6 +89,7 @@ export default function Camera(props) {
 
         mediaRecorderRef.current.addEventListener("stop", () => {
             const blob = new Blob(recordedChunks, { type: "video/webm" });
+            props.setVideoBlob(blob);
             const url = URL.createObjectURL(blob);
             props.setVideoURL(url);
         });
@@ -93,6 +112,23 @@ export default function Camera(props) {
             document.body.removeChild(link);
         }
     };
+
+    const saveVideo = async () => {
+        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/save-video`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                token: Cookies.get("ROBOT_TOKENS"),
+                blob_video: videoBlob 
+            })
+        });
+
+        if (response.ok) {
+            props.setVideoBlob(null);
+            props.setVideoURL(null);
+            window.alert("Video Save Successfully");
+        }
+    }
 
     // ====================================================================================
 
@@ -254,7 +290,9 @@ export default function Camera(props) {
                         <>
                             <img className='taking-image' src={imgSrc} />   
                             <button className="buttonCss-right-frame" onClick={downloadImage}>Download</button> 
+                            <button className="buttonCss-right-frame" onClick={saveImage}>Save</button>
                             <button className="buttonCss-right-frame" onClick={() => props.setImgSrc(null)}>Clear</button> 
+                             
                         </>
                     
                     }
@@ -263,7 +301,9 @@ export default function Camera(props) {
                         <>
                             <video className='taking-image' src={videoURL} controls />
                             <button className="buttonCss-right-frame" onClick={downloadVideo}>Download</button> 
+                            <button className="buttonCss-right-frame" onClick={saveVideo}>Save</button> 
                             <button className="buttonCss-right-frame" onClick={() => {props.setVideoURL(null); setRecordedChunks([]);}}>Clear</button>
+                            
                         </>
                     }
                     
