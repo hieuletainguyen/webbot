@@ -7,28 +7,18 @@ export default function Home() {
             <div className="main-container">
 
                 
-                    <h1 className='block1'>Introduction</h1>
+                    <h1 className='block1'>WECLOME</h1>
                     <div className="description1">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>- afadfasdf</td>
-                                </tr>
-                                <tr>
-                                    <td>- asdggeye</td>
-                                </tr>
-                                <tr>
-                                    <td>- afgreqrqe</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <p>Welcome to Webbot, where you can step into the future of robotics. </p>
+                        <p>Operate our advanced robot arm remotely, book your sessions, and dive into real-time control with live video feedback. </p>
+                        <p>Join us and discover the next frontier in interactive robotics today!</p>
                     </div>
                 
                 
                     <h1 className="block2">Robot Arm</h1>
                     <div className="description2">
                                 
-                        <img className="sub-block-img" alt="robot-arm" src="/pictures/robot_arm1.jpg" />
+                        <img className="sub-block-img" alt="robot-arm" src="/pictures/robot_6.jpg" />
                         
                         <table>
                             <tbody>

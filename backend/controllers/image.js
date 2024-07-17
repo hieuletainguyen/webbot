@@ -1,6 +1,10 @@
 const database = require("../database/db");
 const {validatonResult, validationResult} = require("express-validator");
-const {jwtSecretkey } = require("../secret-data");
+const myDictionary = {
+    a: 'Apple',
+    b: 'Banana',
+    c: 'Cherry'
+  };
 const jwt = require("jsonwebtoken");
 
 const saveImage = (req, res) => {
@@ -32,9 +36,6 @@ const saveImage = (req, res) => {
 
 }
 
-const getAllImages = (req, res) => {
-
-}
 
 const saveVideo = (req, res) => {
 
@@ -64,9 +65,18 @@ const saveVideo = (req, res) => {
 
 }
 
+const getAllImages = (req, res) => {
+
+}
+
+const getAllVideos = (req, res) => {
+
+}
+
 
 module.exports = {
     saveImage,
     saveVideo, 
-    getAllImages
+    getAllImages, 
+    getAllVideos
 }

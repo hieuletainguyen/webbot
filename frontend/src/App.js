@@ -12,7 +12,7 @@ import CodingSpace from "./components/CodingSpace";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
-
+import BookingCalendar from "./components/BookingCalendar";
 
 function App() {
   const [armData, setArmData] = useState({
@@ -54,6 +54,8 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
 
           <Route path="/code-space" element={<CodingSpace /> } />
+
+          <Route path="/booking-calendar" element={<BookingCalendar />} />
         </Routes>
       </Router>
 

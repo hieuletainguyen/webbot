@@ -16,27 +16,27 @@ export default function NavBar(props) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-      const response = await fetch(`${process.env.BACKEND_SERVER_URL}/logout`, {
-        method: "POST",
-        credentials: "include", 
-        headers: {"Content-Type" : "application/json"}, 
-        body: JSON.stringify({
-          token: Cookies.get("ROBOT_TOKENS")
-        })
-      })
+      // const response = await fetch(`${process.env.BACKEND_SERVER_URL}/logout`, {
+      //   method: "POST",
+      //   credentials: "include", 
+      //   headers: {"Content-Type" : "application/json"}, 
+      //   body: JSON.stringify({
+      //     token: Cookies.get("ROBOT_TOKENS")
+      //   })
+      // })
 
-      Cookies.remove("ROBOT_TOKENS");
+      // Cookies.remove("ROBOT_TOKENS");
 
-      if (response.ok){
+      // if (response.ok){
         props.setIsLoggedIn({
             ...props.isLoggedIn, 
             status: false, 
             username: "" 
         })
         navigate('/');
-      } else {
-        console.log(response);
-      }
+      // } else {
+      //   console.log(response);
+      // }
 
   }
 
@@ -56,6 +56,13 @@ export default function NavBar(props) {
               CONTROL
             </StyledNavLink>
           </NavItem>
+          {isLoggedIn.status && 
+            <NavItem>
+              <StyledNavLink to="/booking-calendar" activeclassname="active">
+                BOOKING
+              </StyledNavLink>
+            </NavItem>
+          }
 
           {/* <NavItem>
             <StyledNavLink to="/code-space" activeclassname="active">

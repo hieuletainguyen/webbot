@@ -52,12 +52,16 @@
     width: 100%;
     height: 100%;
     border: 4px solid silver;
-    display: flex;
-    text-align: center;
-    vertical-align: middle;
     border-radius: 16px;
     overflow: hidden; /* Ensures the webcam fits within the frame */
 
+}
+.description1 p{
+  font-size: 150%;
+  padding: 10px 20px;
+  text-align: center;
+  flex-direction: column;
+  font-weight: 490;
 }
 
 .description2 { 
@@ -69,6 +73,7 @@
     border: 4px solid silver;
     display: flex;
     border-radius: 16px;
+    text-align: left;
     overflow: hidden; /* Ensures the webcam fits within the frame */
 
 }
@@ -81,7 +86,7 @@
     height: 100%;
     border: 4px solid silver;
     display: flex;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
     border-radius: 16px;
     overflow: hidden; /* Ensures the webcam fits within the frame */
