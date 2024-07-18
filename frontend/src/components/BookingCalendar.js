@@ -44,7 +44,7 @@ function BookingCalendar () {
     }
 
     const handleSubmit = async () => {
-            const response = await fetch(`${process.env.BACKEND_SERVER_URL}/book-robot`, {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/book-robot`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -67,7 +67,7 @@ function BookingCalendar () {
     useEffect(() => {
         if (stringDate){
             const fetchBookedTime = async () => {
-                const response = await fetch(`${process.env.BACKEND_SERVER_URL}/booked-timeslots?date=${stringDate}`);
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${stringDate}`);
                 const data = await response.json();
 
                 if (response.ok && Object.keys(data).length > 0) {
@@ -96,7 +96,7 @@ function BookingCalendar () {
                 {date && time && robot && 
                 
                 <div className="confirm-booking">
-                    <p>You have booked {robot} on {stringDate} at {time}</p>
+                    <p>You want to book {robot} on {stringDate} at {time}</p>
                     <button onClick={handleSubmit}>
                         Confirm
                     </button>

@@ -16,27 +16,27 @@ export default function NavBar(props) {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-      // const response = await fetch(`${process.env.BACKEND_SERVER_URL}/logout`, {
-      //   method: "POST",
-      //   credentials: "include", 
-      //   headers: {"Content-Type" : "application/json"}, 
-      //   body: JSON.stringify({
-      //     token: Cookies.get("ROBOT_TOKENS")
-      //   })
-      // })
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/logout`, {
+        method: "POST",
+        credentials: "include", 
+        headers: {"Content-Type" : "application/json"}, 
+        body: JSON.stringify({
+          token: Cookies.get("ROBOT_TOKENS")
+        })
+      })
 
-      // Cookies.remove("ROBOT_TOKENS");
+      Cookies.remove("ROBOT_TOKENS");
 
-      // if (response.ok){
+      if (response.ok){
         props.setIsLoggedIn({
             ...props.isLoggedIn, 
             status: false, 
             username: "" 
         })
         navigate('/');
-      // } else {
-      //   console.log(response);
-      // }
+      } else {
+        console.log(response);
+      }
 
   }
 

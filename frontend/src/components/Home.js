@@ -1,4 +1,3 @@
-import {useState} from "react";
 import "./Home.css"
 export default function Home() {
 
@@ -79,14 +78,14 @@ export default function Home() {
 
             <div className="cards">
                 <div className="card">
-                    <img src="/pictures/esp32.jpg" alt="esp32"/>
+                    <img src="/pictures/esp32.jpeg" alt="esp32"/>
                     <div className="content">
                         <p>Using React to create a front end afa fafa fafa fafa fafafa afafafaf afaf afafa fafa fafafafa fafaf</p>
                     </div>
                 </div>
 
                 <div className="card">
-                    <img src="/pictures/react.png" alt="react"/>
+                    <img src="/pictures/react.jpg" alt="react"/>
                 </div>
 
                 <div className="card">
@@ -105,7 +104,7 @@ export default function Home() {
                 </div>
 
                 <div className="card">
-                    <img src="/pictures/gcp.png" alt="gcp"/>
+                    <img src="/pictures/gcp.jpg" alt="gcp"/>
                     <p>adfafgrcgr</p>
                 </div>
 
@@ -115,10 +114,7 @@ export default function Home() {
                     <p>adfafgrcgr</p>
                 </div>
 
-                <div className="card">
-                    <img src="/pictures/docker-compose.png" alt="docker-compose"/>
-                    <p>adfafgrcgr</p>
-                </div>
+               
 
                 <div className="card">
                     <img src="/pictures/docker.png" alt="docker-compose"/>

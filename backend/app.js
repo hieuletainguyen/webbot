@@ -6,14 +6,24 @@ const app = express();
 const init_routes = require("./routes/init_routes")
 const account_routes = require("./routes/accounts_route")
 const controll_routes = require("./routes/controll_route")
+const booking_routes = require("./routes/booking_route")
 
 const port = 9897;
 
-app.use(cors());
+// 'http://localhost:3000'|| 'http://127.0.0.1:3000'
+var corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 204,
+  credentials: true
+}
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(init_routes);
 app.use(account_routes);
 app.use(controll_routes);
+app.use(booking_routes);
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

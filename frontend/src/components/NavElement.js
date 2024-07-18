@@ -10,14 +10,12 @@ export const Container = styled.div`
 `;
 
 export const Navbar = styled.div`
-  height: 60px;
+  height: 10%;
   min-width: 700px;
   width: 100%;
-  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 0;
   position: fixed;
 `;
 
@@ -28,9 +26,10 @@ export const NavList = styled.ul`
   width: 100%;
   height: 100%;
   justify-content: space-evenly;
-  border-radius: 50px;
   align-items: center;
-  background: #282828;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+
 `;
 
 export const ActiveItem = styled.li`
@@ -57,10 +56,10 @@ export const NavItem = styled.li`
 export const StyledNavLink = styled(Link)`
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 15px;
-  color: #fff;
+  font-size: 17px;
   letter-spacing: 1.5px;
   z-index: 10;
+  color: black;
   font-weight: bold;
 
   &.active {
@@ -70,6 +69,6 @@ export const StyledNavLink = styled(Link)`
     position: absolute;
     vertical-align: middle;
     color: #000;
-    font-size: large;
+    font-size: 17px;  
   }
 `;

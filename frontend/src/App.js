@@ -1,5 +1,5 @@
 
-import {useRef, useEffect, useState} from "react";
+import {useState} from "react";
 import {
   BrowserRouter as Router, 
   Routes, 
@@ -24,7 +24,7 @@ function App() {
     "claw": 49
   })
   const [isLoggedIn, setIsLoggedIn] = useState({
-    status: true,
+    status: false,
     username: null
   })
 
@@ -46,16 +46,17 @@ function App() {
 
           <Route path="/control" element={<Controller isLoggedIn={isLoggedIn} armData={armData} setArmData={setArmData} imgSrc={imgSrc} setImgSrc={setImgSrc}
                                                       videoURL={videoURL} setVideoURL={setVideoURL} videoBlob={videoBlob} setVideoBlob={setVideoBlob}/>} />
+          
 
-          <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />
+          {!isLoggedIn.status && <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />}
 
-          <Route path="/sign-up" element={<Signup />} />
+          {!isLoggedIn.status && <Route path="/sign-up" element={<Signup />} />}
 
           <Route path="/profile" element={<UserProfile />} />
 
           <Route path="/code-space" element={<CodingSpace /> } />
 
-          <Route path="/booking-calendar" element={<BookingCalendar />} />
+          {isLoggedIn.status && <Route path="/booking-calendar" element={<BookingCalendar />} />}
         </Routes>
       </Router>
 

@@ -11,12 +11,12 @@ const bookRobot = (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
-        const query_auth = `SELECT * FROM accounts WHERE username = ?`;
+        const query_auth = "SELECT * FROM accounts WHERE username = ?";
         database.query(query_auth, [decode.username], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_book = `INSERT INTO booking_schedule (username, date, time, robot_option) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?)`;
+                const query_book = "INSERT INTO booking_schedule (username, date, time, robot_option) VALUES (?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?)";
                 database.query(query_book, [decode.username, date, time, robot], (err, result) => {
                     if (err) throw err;
                     res.status(200).json({ message: "Booking Success" });

@@ -1,0 +1,50 @@
+version: "3.8"
+
+services: 
+
+  frontend:
+    depends_on:
+      - backend
+    build: 
+      context: ./frontend
+      args:
+        - REACT_APP_BACKEND_URL=http://127.0.0.1:9897
+    volumes:
+      - frontend-data:/frontend-app
+    ports:
+      - "3000:3000"
+
+
+  backend: 
+    depends_on:
+      - postgres_container
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "9897:9897"
+    volumes:
+      - backend-data:/backend-app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=robot_accounts
+      
+  
+  postgres_container:
+    image: postgres:14.5
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=robot_accounts
+    volumes:
+      - ./postgresql-init:/docker-entrypoint-initdb.d
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  
+
+volumes: 
+  postgres-data:
+  backend-data:
+  frontend-data:

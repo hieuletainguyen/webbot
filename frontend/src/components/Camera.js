@@ -39,7 +39,7 @@ export default function Camera(props) {
     }
 
     const saveImage = async () => {
-        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/save-image`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/save-image`, {
             method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -138,7 +138,7 @@ export default function Camera(props) {
             [name]: event.target.value
         }
         props.setArmData(newArmData);
-        const response = await fetch( `${process.env.BACKEND_SERVER_URL}/arm-data`, {
+        const response = await fetch( `${process.env.REACT_APP_BACKEND_URL}/arm-data`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

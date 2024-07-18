@@ -1,7 +1,4 @@
-const fs = require("fs");
 
-const sqlStatement = [];
-sqlStatement.push(`
     DO $$
     BEGIN
         IF NOT EXISTS (
@@ -13,6 +10,7 @@ sqlStatement.push(`
     END $$;
 
     \c robot_accounts;
+    
 
     CREATE TABLE IF NOT EXISTS accounts(
         id SERIAL,
@@ -50,9 +48,3 @@ sqlStatement.push(`
         PRIMARY KEY (id)
     );
 
-`);
-
-
-fs.writeFileSync("../../postgresql-init/init.sql", sqlStatement.join("\n"), 'utf8');
-
-console.log("SQL Script generated done!");

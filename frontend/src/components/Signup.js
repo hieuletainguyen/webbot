@@ -9,7 +9,7 @@ export default function Signup (props) {
     const navigate = useNavigate();
 
     const addAccount = async() => {
-        const result = await fetch(`${process.env.BACKEND_SERVER_URL}/add-account`, {
+        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/add-account`, {
             method: "POST", 
             headers: {
                 "Content-Type": "application/json",
@@ -43,11 +43,6 @@ export default function Signup (props) {
             return ;
         }
 
-        if (!correct) {
-            window.alert("your retype password is not correct");
-            return;
-        }
-
         addAccount();
     }
 
@@ -57,40 +52,28 @@ export default function Signup (props) {
             <div className="signup-subcontainer">
                 <h2>Sign Up</h2>
                 <table className="table-container">
-                    <tr>
-                        <td className="title-styled">Username</td>
-                        <td>
-                            <input type="text" className="input-style" 
-                                    placeholder="Enter your username"
-                                    onChange={(e) => setUsername(e.target.value)}/> 
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td className="title-styled">Username</td>
+                            <td>
+                                <input type="text" className="input-style" 
+                                        placeholder="Enter your username"
+                                        onChange={(e) => setUsername(e.target.value)}/> 
+                            </td>
+                        </tr>
 
-                    <br/>
-                    
-                    <tr>
-                        <td className="title-styled">Password</td>
-                        <td>
-                            <input type="password" className="input-style"
-                                    placeholder="Enter your password"
-                                    onChange={(e) => setPassword(e.target.value)}/> 
-                        </td>
-                    </tr>
+                        <br/>
+                        
+                        <tr>
+                            <td className="title-styled">Password</td>
+                            <td>
+                                <input type="password" className="input-style"
+                                        placeholder="Enter your password"
+                                        onChange={(e) => setPassword(e.target.value)}/> 
+                            </td>
+                        </tr>
 
-                    <br/>
-
-                    <tr>
-                        <td className="title-styled">Retype password</td>
-                        <td>
-                            <input type="password" className="input-style"
-                                    placeholder="Re-Enter your password"
-                                    onChange={(e) => {
-                                        if (e.target.value === password) {
-                                            setCorrect(true);
-                                        }
-                                    }}/> 
-                        </td>
-                    </tr>
+                    </tbody>
 
                 </table>
 

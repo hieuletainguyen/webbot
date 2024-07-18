@@ -9,42 +9,28 @@ const {jwtSecretkey, generate_salt} = require("../secret-data");
 const addAccount = async (req, res) => {
     const errors = validationResult(req);
 
-    if (errors.array().length > 0){
-        res.send(errors.array());
-    } else {
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
 
-        const {username, password} = req.body;
+    const { username, password } = req.body;
+    try {
         const salt = await generate_salt();
         const hash_password = await bcrypt.hash(password, salt);
 
-        const account = {
-            username: username,
-            password: hash_password
+        const uniqueQuery = "SELECT COUNT(*) FROM accounts WHERE username = $1";
+        const uniqueResult = await pool.query(uniqueQuery, [username]);
+
+        if (uniqueResult.rows[0].count > 0) {
+            return res.status(409).send({ message: "Username already exists" });
+        } else {
+            const insertQuery = "INSERT INTO accounts (username, password) VALUES ($1, $2)";
+            await pool.query(insertQuery, [username, hash_password]);
+            res.send({ message: "Success" });
         }
-
-        const unique = "SELECT distinct(username) FROM accounts WHERE username = ?";
-        database.query(unique, username, (err, result) => {
-            if (err) {
-                return res.status(500).send({message: "Server Error"});
-            };
-
-            if (result.length > 0){
-                return res.send({message: "username already exists"});
-                
-            } else {
-
-                const sqlQuery = 'INSERT INTO accounts SET ?';
-
-                database.query(sqlQuery, account, (err, row) => {
-                    if (err) {
-                        return res.status(500).send({message: "Server Error"});
-                    };
-
-                    res.send({message: "success"});
-                });
-            }
-
-        })
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ message: "Server Error" });
     }
 };
 

@@ -9,7 +9,7 @@ export default function Signin(props) {
     const navigate = useNavigate();
 
     const validate = async () => {
-        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/auth`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
             method: "POST", 
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, password})
@@ -54,29 +54,29 @@ export default function Signin(props) {
             <div className="signup-subcontainer">
                 <h2>Sign In</h2>
                 <table className="table-container">
-                    <tr>
-                        <td className="title-styled">Username</td>
-                        <td>
-                            <input type="text" className="input-style" 
-                                    placeholder="Enter your username"
-                                    onChange={(e) => setUsername(e.target.value)}/> 
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td className="title-styled">Username</td>
+                            <td>
+                                <input type="text" className="input-style" 
+                                        placeholder="Enter your username"
+                                        onChange={(e) => setUsername(e.target.value)}/> 
+                            </td>
+                        </tr>
 
-                    <br/>
-                    
-                    <tr>
-                        <td className="title-styled">Password</td>
-                        <td>
-                            <input type="password" className="input-style"
-                                    placeholder="Enter your password"
-                                    onChange={(e) => setPassword(e.target.value)}/> 
-                        </td>
-                    </tr>
+                        <br/>
+                        
+                        <tr>
+                            <td className="title-styled">Password</td>
+                            <td>
+                                <input type="password" className="input-style"
+                                        placeholder="Enter your password"
+                                        onChange={(e) => setPassword(e.target.value)}/> 
+                            </td>
+                        </tr>
 
-                    <br/>
-
-                    
+                        <br/>
+                    </tbody>
 
                 </table>
 
