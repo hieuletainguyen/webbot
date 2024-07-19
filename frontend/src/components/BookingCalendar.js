@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import Calendar from "react-calendar";
 import "./BookingCalendar.css";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const default_robotList = ["robot_1", "robot_2", "robot_3", "robot_4", "robot_5", "robot_6"]
 const default_timeList = {"9:00 AM": default_robotList, 
@@ -26,11 +27,12 @@ const filterTimeList = (dict, filterDict) => {
 }
 
 function BookingCalendar () {
-    const [date, setDate] = useState(null);
-    const [formatedDate, setFormatedDate] = useState(null);
+    const [date, setDate] = useState(new Date());
+    const [formatedDate, setFormatedDate] = useState("");
     const [stringDate, setStringDate] = useState("");
     const [time, setTime] = useState('');
     const [robot, setRobot] = useState('');
+    const navigate = useNavigate();
 
     const [timeList, setTimeList] = useState(default_timeList);
 
@@ -38,51 +40,78 @@ function BookingCalendar () {
         setDate(date);
         setStringDate(date.toLocaleString("default", {weekday: "long"}) + ", " + date.getDate() + " " + date.toLocaleString("default", {month: "long"}) + " " + date.getFullYear());
         const year = date.getFullYear();
-        const month = date.getMonth()+1;
-        const day = date.getDate();
-        setFormatedDate(`${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`);
+        const month = (date.getMonth()+1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        const formatedDate_sample = `${year}-${month}-${day}`;
+        setFormatedDate(formatedDate_sample);
+
+        const fetchBookedTime = async () => {
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${formatedDate_sample}`);
+            const data = await response.json();
+            
+            if (response.ok && Object.keys(data).length > 0) {
+                console.log(data);
+                const empty_spots = filterTimeList(timeList, data.result);
+
+                console.log(empty_spots);
+                    
+                setTimeList(empty_spots);
+            } else {
+                console.log(data);
+            }
+        }
+        fetchBookedTime();
+        
     }
 
     const handleSubmit = async () => {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/book-robot`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    token: Cookies.get("ROBOT_TOKENS"),
-                    date: formatedDate, 
-                    time: time, 
-                    robot: robot
-                })
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/book-robot`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                token: Cookies.get("ROBOT_TOKENS"),
+                date: formatedDate, 
+                time: time, 
+                robot: robot
             })
+        })
 
-            const data = await response.json();
+        const data = await response.json();
+        
 
-            if (data.message === "Booking Success"){
-                setDate(new Date());
-                setTime('');
-                setRobot('');
-            }
+        if (data.message === "Booking Success"){
+            setDate("");
+            setTime('');
+            setRobot('');
+            navigate('/booking-calendar')
+        } else {
+            console.log(data);
+        }
     }
 
-    useEffect(() => {
-        if (stringDate){
-            const fetchBookedTime = async () => {
-                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${stringDate}`);
-                const data = await response.json();
+    // useEffect(() => {
+    //     if (formatedDate !== ""){
+        
+    //         const fetchBookedTime = async () => {
+    //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${formatedDate}`);
+    //             const data = await response.json();
+                
 
-                if (response.ok && Object.keys(data).length > 0) {
-                    console.log(data);
-                    const empty_spots = filterTimeList(timeList, data.result);
+    //             if (response.ok && Object.keys(data).length > 0) {
+    //                 console.log(data);
+    //                 const empty_spots = filterTimeList(timeList, data.result);
 
-                    console.log(empty_spots);
+    //                 console.log(empty_spots);
                         
-                    setTimeList(empty_spots);
-                }
-            }
-            fetchBookedTime();
+    //                 setTimeList(empty_spots);
+    //             } else {
+    //                 console.log(data);
+    //             }
+    //         }
+    //         fetchBookedTime();
+    //     }
 
-        }
-    })
+    // }, [formatedDate, timeList])
 
     return (
         <div className="booking-calendar-container">

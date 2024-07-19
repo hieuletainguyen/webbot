@@ -1,7 +1,7 @@
 import {useState} from "react";
 import "./Signup-in.css";
 import {useNavigate} from "react-router-dom";
-
+import Cookies from "js-cookie";
 
 export default function Signin(props) {
     const [username, setUsername] = useState('');
@@ -24,10 +24,13 @@ export default function Signin(props) {
                 username: username
             });
             
+            Cookies.set("ROBOT_TOKENS", data.token, {expires: 1});
             navigate('/');
         }  else if(data.message === "fail") {
             window.alert("Incorrect password or username");
 
+        } else {
+            console.log(data);
         }
     }
 
@@ -64,7 +67,6 @@ export default function Signin(props) {
                             </td>
                         </tr>
 
-                        <br/>
                         
                         <tr>
                             <td className="title-styled">Password</td>
@@ -75,7 +77,6 @@ export default function Signin(props) {
                             </td>
                         </tr>
 
-                        <br/>
                     </tbody>
 
                 </table>

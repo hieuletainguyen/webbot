@@ -12,7 +12,7 @@ const port = 9897;
 
 // 'http://localhost:3000'|| 'http://127.0.0.1:3000'
 var corsOptions = {
-  origin: "*",
+  origin: 'http://localhost:3000'|| 'http://127.0.0.1:3000',
   optionsSuccessStatus: 204,
   credentials: true
 }

@@ -62,7 +62,6 @@ export default function Signup (props) {
                             </td>
                         </tr>
 
-                        <br/>
                         
                         <tr>
                             <td className="title-styled">Password</td>

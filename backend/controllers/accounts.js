@@ -19,15 +19,17 @@ const addAccount = async (req, res) => {
         const hash_password = await bcrypt.hash(password, salt);
 
         const uniqueQuery = "SELECT COUNT(*) FROM accounts WHERE username = $1";
-        const uniqueResult = await pool.query(uniqueQuery, [username]);
-
-        if (uniqueResult.rows[0].count > 0) {
-            return res.status(409).send({ message: "Username already exists" });
-        } else {
-            const insertQuery = "INSERT INTO accounts (username, password) VALUES ($1, $2)";
-            await pool.query(insertQuery, [username, hash_password]);
-            res.send({ message: "Success" });
-        }
+        database.query(uniqueQuery, [username], (err, result) => {
+            if (result.rows[0].count > 0) {
+                return res.status(400).json({ message: "Username already exists" });
+            } else {
+                const insertQuery = "INSERT INTO accounts (username, password) VALUES ($1, $2)";
+                database.query(insertQuery, [username, hash_password], (err, result) => {
+                    return res.status(200).json({message: "success"});
+                });
+                
+            }
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send({ message: "Server Error" });
@@ -37,16 +39,16 @@ const addAccount = async (req, res) => {
 const authorization = async (req, res) => {
     const {username, password} = req.body;
 
-    const sqlQuery = "SELECT * FROM accounts WHERE username = ?";
+    const sqlQuery = "SELECT * FROM accounts WHERE username = $1";
 
     database.query(sqlQuery, [username], async (err, result) => {
         if (err) {
             return res.status(500).send({message: "Server Error"});
         };
 
-        if (result.length === 1){
+        if (result.rowCount === 1){
 
-            const hashedPassword = result[0].password;
+            const hashedPassword = result.rows[0].password;
     
             const match = await bcrypt.compare(password, hashedPassword);
     
@@ -54,7 +56,7 @@ const authorization = async (req, res) => {
             
                 const token = jwt.sign({username: username}, jwtSecretkey, {expiresIn: "1h"});
 
-                const query1 = "INSERT INTO tokens (token) VALUES (?)";
+                const query1 = "INSERT INTO tokens (token) VALUES ($1)";
 
                 database.query(query1 , [token], (err, result) => {
                     if (err) throw err;
@@ -66,11 +68,11 @@ const authorization = async (req, res) => {
                 })
 
             } else {
-                res.status(401).json({message: "Invalid username or password"});
+                res.status(401).json({message: "Invalid username or password", final_result: match});
             }
     
         } else {
-            res.status(401).json({message: "Invalid username or password"})
+            res.status(401).json({message: "Invalid username or password", final_result: result})
         }
 
     });
@@ -85,11 +87,11 @@ const decode_token = (req, res) => {
                 res.status(401).json({message: "Invalid token"})
             } else {
 
-                const query = "SELECT * FROM tokens WHERE token = ?";
+                const query = "SELECT * FROM tokens WHERE token = $1";
                 database.query(query, [token], (err, result) => {
                     if (err) throw err;
 
-                    if (result.length === 1) {
+                    if (result.rowCount === 1) {
                         res.status(200).json({message: "success", username: decoded.username})
                     } else {
                         res.status(401).json({message: "Invalid token"})
@@ -104,7 +106,7 @@ const logout = (req, res) => {
     const {token} = req.body;
 
     if (token) {
-        const query = "DELETE FROM tokens WHERE token = ?";
+        const query = "DELETE FROM tokens WHERE token = $1";
         database.query(query, [token], (err, result) => {
             if (err) {
                 return res.status(500).send({message: "Server Error"});
@@ -119,12 +121,12 @@ const logout = (req, res) => {
 const checkAccount = (req, res) => {
     const {username} = req.body;
 
-    const sqlQuery = "SELECT * FROM accounts WHERE username = ?";
+    const sqlQuery = "SELECT * FROM accounts WHERE username = $1";
 
     database.query(sqlQuery, username, (err, result) => {
         if (err) throw err;
 
-        if (result.length === 0){
+        if (result.rowCount === 0){
             res.json({isExisted: false})
         } else {
             res.json({isExisted: true})

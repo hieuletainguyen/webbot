@@ -7,7 +7,7 @@ router.post("/book-robot",
     body("token").not().isEmpty(), 
     body("date").not().isEmpty(),
     body("time").not().isEmpty(),
-    body("robotId").not().isEmpty(),
+    body("robot").not().isEmpty(),
     booking.bookRobot
 )
 

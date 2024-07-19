@@ -1,10 +1,5 @@
 const database = require("../database/db");
 const {validatonResult, validationResult} = require("express-validator");
-const myDictionary = {
-    a: 'Apple',
-    b: 'Banana',
-    c: 'Cherry'
-  };
 const jwt = require("jsonwebtoken");
 
 const saveImage = (req, res) => {
@@ -17,11 +12,11 @@ const saveImage = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
+        const query_auth = "SELECT * FROM accounts WHERE username = $1";
         database.query(query_auth, [decode.username], (err, result) => {
             if (err) throw err;
 
-            if (result.length === 1) {
+            if (result.rowCount === 1) {
                 const query_insert = "INSERT INTO image (username, image) VALUES (?, ?)";
                 database.query(query_insert, [decode.username, blob_image], (err, result) => {
                     if (err) throw err;
@@ -47,12 +42,12 @@ const saveVideo = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
+        const query_auth = "SELECT * FROM accounts WHERE username = $1";
         database.query(query_auth, [decode.username], (err, result) => {
             if (err) throw err;
 
-            if (result.length === 1) {
-                const query_insert = "INSERT INTO video (username, video) VALUES (?, ?)";
+            if (result.rowCount === 1) {
+                const query_insert = "INSERT INTO video (username, video) VALUES ($1, $2)";
                 database.query(query_insert, [decode.username, blob_video], (err, result) => {
                     if (err) throw err;
 

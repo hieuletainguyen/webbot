@@ -1,5 +1,5 @@
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {
   BrowserRouter as Router, 
   Routes, 
@@ -13,6 +13,7 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
 import BookingCalendar from "./components/BookingCalendar";
+import Cookies from "js-cookie";
 
 function App() {
   const [armData, setArmData] = useState({
@@ -31,6 +32,30 @@ function App() {
   const [imgSrc, setImgSrc] = useState(null);
   const [videoURL, setVideoURL] = useState(null);
   const [videoBlob, setVideoBlob] = useState(null);
+
+  useEffect(() => {
+    const auth = async () => {
+      const token = Cookies.get("ROBOT_TOKENS");
+      if (token) {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth_token`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: token})
+        });
+        const data = await response.json();
+        setIsLoggedIn({
+          status: true,
+          username: data.username
+        });
+        console.log(isLoggedIn)
+        console.log(data)
+      }
+    }
+
+    auth();
+  }, [])
 
 
 
