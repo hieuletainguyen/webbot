@@ -4,64 +4,55 @@ import "./BookingCalendar.css";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-const default_robotList = ["robot_1", "robot_2", "robot_3", "robot_4", "robot_5", "robot_6"]
-const default_timeList = {"9:00 AM": default_robotList, 
-                            "11:00 AM": default_robotList, 
-                            "1:00 PM" : default_robotList, 
-                            "3:00 PM" : default_robotList, 
-                            "5:00 PM" : default_robotList, 
-                            "7:00 PM" : default_robotList};
+const default_robotList = ["robot_1", "robot_2", "robot_3", "robot_4", "robot_5", "robot_6"];
+const default_timelist = ["9:00 AM","11:00 AM", "1:00 PM","3:00 PM","5:00 PM","7:00 PM"];
 
-const filterTimeList = (dict, filterDict) => {
-    const filteredDict = {};
-
-    for (const key in dict) {
-        if (filterDict[key]){
-            filteredDict[key] = dict[key].filter(value => !filterDict[key].includes(value));
-
-        } else {
-            filteredDict[key] = dict[key];
-        }
-    }
-    return filteredDict;
-}
 
 function BookingCalendar () {
     const [date, setDate] = useState(new Date());
-    const [formatedDate, setFormatedDate] = useState("");
-    const [stringDate, setStringDate] = useState("");
+    const [formatedDate, setFormatedDate] = useState('none');
+    const [stringDate, setStringDate] = useState('');
     const [time, setTime] = useState('');
     const [robot, setRobot] = useState('');
     const navigate = useNavigate();
+    const [robotList, setRobotList] = useState(default_robotList)
+    const [timeList, setTimeList] = useState(default_timelist);
 
-    const [timeList, setTimeList] = useState(default_timeList);
-
-    const handleChange = (date) => {
-        setDate(date);
-        setStringDate(date.toLocaleString("default", {weekday: "long"}) + ", " + date.getDate() + " " + date.toLocaleString("default", {month: "long"}) + " " + date.getFullYear());
-        const year = date.getFullYear();
-        const month = (date.getMonth()+1).toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        const formatedDate_sample = `${year}-${month}-${day}`;
-        setFormatedDate(formatedDate_sample);
-
-        const fetchBookedTime = async () => {
-            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${formatedDate_sample}`);
-            const data = await response.json();
-            
-            if (response.ok && Object.keys(data).length > 0) {
-                console.log(data);
-                const empty_spots = filterTimeList(timeList, data.result);
-
-                console.log(empty_spots);
-                    
-                setTimeList(empty_spots);
-            } else {
-                console.log(data);
-            }
+    useEffect(() => {
+        if (date) {
+          const year = date.getFullYear();
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const day = date.getDate().toString().padStart(2, '0');
+          setFormatedDate(`${year}-${month}-${day}`);
+          setStringDate(date.toLocaleString("default", { weekday: "long" }) + ", " + date.getDate() + " " + date.toLocaleString("default", { month: "long" }) + " " + date.getFullYear());
         }
-        fetchBookedTime();
+      }, [date]);
+
+    const handleChangeDate = (date) => {
+        setDate(date);
+        setTime('');
+        setRobot('');
+    }
+
+    const handleChangeTime = async (chosen_time) => {
+        setTime(chosen_time);
+        fetchBookedTime(formatedDate, chosen_time);
+    }
+
+    const fetchBookedTime = async (chosen_date, chosen_time) => {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${chosen_date}&time=${chosen_time}`);
+        const data = await response.json();
+        console.log(data);
         
+        if (response.ok && data.final_result.length > 0) {
+            const empty_spots = robotList.filter((robot) => !data.final_result.includes(robot));
+
+            console.log(empty_spots);
+                
+            setRobotList(empty_spots);
+        } else {
+            setRobotList(default_robotList);
+        }
     }
 
     const handleSubmit = async () => {
@@ -89,36 +80,13 @@ function BookingCalendar () {
         }
     }
 
-    // useEffect(() => {
-    //     if (formatedDate !== ""){
-        
-    //         const fetchBookedTime = async () => {
-    //             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/booked-timeslots?date=${formatedDate}`);
-    //             const data = await response.json();
-                
-
-    //             if (response.ok && Object.keys(data).length > 0) {
-    //                 console.log(data);
-    //                 const empty_spots = filterTimeList(timeList, data.result);
-
-    //                 console.log(empty_spots);
-                        
-    //                 setTimeList(empty_spots);
-    //             } else {
-    //                 console.log(data);
-    //             }
-    //         }
-    //         fetchBookedTime();
-    //     }
-
-    // }, [formatedDate, timeList])
 
     return (
         <div className="booking-calendar-container">
             <div className="left-frame">
                 <h1>Booking appointment</h1>
                 <div className="booking-calendar">
-                    <Calendar onChange={handleChange} value={date} />
+                    <Calendar onChange={handleChangeDate} value={date} />
 
                 </div>
 
@@ -143,9 +111,9 @@ function BookingCalendar () {
                                     <tr>
                                         <th>TIME</th>
                                     </tr>
-                                    {Object.keys(timeList).map((chosenTime) => 
+                                    {timeList.map((chosenTime) => 
                                         <tr key={chosenTime}>
-                                            <td><button className={`${time === chosenTime && 'selected'}`} onClick={() => setTime(chosenTime)}>{chosenTime}</button></td>
+                                            <td><button className={`${time === chosenTime && 'selected'}`} onClick={() => handleChangeTime(chosenTime)}>{chosenTime}</button></td>
                                         </tr>
                                     )}
 
@@ -160,7 +128,7 @@ function BookingCalendar () {
                                         <tr>
                                             <th>ROBOT OPTIONS</th>
                                         </tr>
-                                        {timeList[time].map((robotId) => 
+                                        {robotList.map((robotId) => 
                                             <tr key={robotId}>
                                                 <td><button className={`${robot === robotId && 'selected'}`} onClick={() => setRobot(robotId)}><img src={`/pictures/${robotId}.jpg`} alt={`${robotId}`}/>{robotId}</button></td>
                                             </tr>

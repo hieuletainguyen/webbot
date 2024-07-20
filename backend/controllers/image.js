@@ -12,7 +12,7 @@ const saveImage = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = $1";
+        const query_auth = "SELECT * FROM accounts WHERE username = ?";
         database.query(query_auth, [decode.username], (err, result) => {
             if (err) throw err;
 
@@ -42,12 +42,12 @@ const saveVideo = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = $1";
+        const query_auth = "SELECT * FROM accounts WHERE username = ?";
         database.query(query_auth, [decode.username], (err, result) => {
             if (err) throw err;
 
             if (result.rowCount === 1) {
-                const query_insert = "INSERT INTO video (username, video) VALUES ($1, $2)";
+                const query_insert = "INSERT INTO video (username, video) VALUES (?, ?)";
                 database.query(query_insert, [decode.username, blob_video], (err, result) => {
                     if (err) throw err;
 

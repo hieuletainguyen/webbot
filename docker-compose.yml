@@ -17,7 +17,7 @@ services:
 
   backend: 
     depends_on:
-      - postgres_container
+      - mysql-container
     build: ./backend
     restart: unless-stopped
     ports:
@@ -25,26 +25,26 @@ services:
     volumes:
       - backend-data:/backend-app
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=robot_accounts
+      - DB_HOST=mysql-container
+      - DB_USER=${MYSQLDB_USER}
+      - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - DB_NAME=${MYSQLDB_DATABASES}
       
   
-  postgres_container:
-    image: postgres:14.5
+  mysql-container:
+    image: mysql:8
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=robot_accounts
-    volumes:
-      - ./postgresql-init:/docker-entrypoint-initdb.d
-      - postgres-data:/var/lib/postgresql/data
+      - MYSQL_ROOT_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
-      - "5432:5432"
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./postgresql-init:/docker-entrypoint-initdb.d
   
 
 volumes: 
-  postgres-data:
+  db:
   backend-data:
   frontend-data:
