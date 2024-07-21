@@ -21,10 +21,35 @@ const bookRobot = (req, res) => {
                     if (err) throw err;
                     res.status(200).json({ message: "Booking Success" });
                 })
+
             }
         })
     }
 
+}
+
+const myBookedTimeSlot = (req, res) => {
+    const errors = validationResult(req);
+    const {token, date, time, robot} = req.body;
+    const decode = jwt.verify(token, jwtSecretkey);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } else {
+        const query_auth = "SELECT * FROM accounts WHERE username = ?";
+        database.query(query_auth, [decode.username], (err, result) => {
+            if (err) throw err;
+
+            if (result.length === 1) {
+                const query_book = "SELECT * FROM booking_schedule WHERE username = ?";
+                database.query(query_book, [decode.username], (err, result) => {
+                    if (err) throw err;
+                    res.status(200).json({ final_result: result });
+                })
+
+            }
+        })
+    }
 }
 
 const bookedTimeSlot = (req, res) => { 
@@ -47,7 +72,9 @@ const bookedTimeSlot = (req, res) => {
                 console.log(result);
                 console.log(lst)
                 res.status(200).json({final_result: lst});
-            }  
+            }  else {
+                res.status(200).json({final_result: []})
+            }
         })
 
     }
@@ -58,5 +85,6 @@ const bookedTimeSlot = (req, res) => {
 
 module.exports = {
     bookRobot,
-    bookedTimeSlot
+    bookedTimeSlot, 
+    myBookedTimeSlot
 }

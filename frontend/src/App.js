@@ -13,7 +13,9 @@ import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
 import BookingCalendar from "./components/BookingCalendar";
+import MySchedule from "./components/MySchedule";
 import Cookies from "js-cookie";
+
 
 function App() {
   const [armData, setArmData] = useState({
@@ -82,6 +84,8 @@ function App() {
           <Route path="/code-space" element={<CodingSpace /> } />
 
           {isLoggedIn.status && <Route path="/booking-calendar" element={<BookingCalendar />} />}
+        
+          {isLoggedIn.status && <Route path="/my-booking-schedule" element={<MySchedule />} />}
         </Routes>
       </Router>
 

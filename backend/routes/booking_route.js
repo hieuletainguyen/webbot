@@ -15,5 +15,9 @@ router.get("/booked-timeslots",
     booking.bookedTimeSlot
 )
 
+router.get("/my-booked-timeslots", 
+    booking.myBookedTimeSlot
+)
+
 
 module.exports = router;

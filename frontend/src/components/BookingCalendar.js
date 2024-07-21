@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 const default_robotList = ["robot_1", "robot_2", "robot_3", "robot_4", "robot_5", "robot_6"];
-const default_timelist = ["9:00 AM","11:00 AM", "1:00 PM","3:00 PM","5:00 PM","7:00 PM"];
+const timeList = ["9:00 AM","11:00 AM", "1:00 PM","3:00 PM","5:00 PM","7:00 PM"];
 
 
 function BookingCalendar () {
@@ -16,7 +16,6 @@ function BookingCalendar () {
     const [robot, setRobot] = useState('');
     const navigate = useNavigate();
     const [robotList, setRobotList] = useState(default_robotList)
-    const [timeList, setTimeList] = useState(default_timelist);
 
     useEffect(() => {
         if (date) {
@@ -45,7 +44,12 @@ function BookingCalendar () {
         console.log(data);
         
         if (response.ok && data.final_result.length > 0) {
-            const empty_spots = robotList.filter((robot) => !data.final_result.includes(robot));
+            const empty_spots = [];
+            for (let i = 0; i < default_robotList.length; i++) {
+                if (!data.final_result.includes(default_robotList[i])){
+                    empty_spots.push(default_robotList[i]);
+                }
+            }
 
             console.log(empty_spots);
                 
