@@ -67,7 +67,7 @@ export default function NavBar(props) {
           {isLoggedIn.status && 
             <NavItem>
               <StyledNavLink to="/my-booking-schedule"  activeclassname="active">
-                Booked Schedule
+                Schedule
               </StyledNavLink>
             </NavItem>
           }

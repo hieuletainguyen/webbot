@@ -30,7 +30,7 @@ const bookRobot = (req, res) => {
 
 const myBookedTimeSlot = (req, res) => {
     const errors = validationResult(req);
-    const {token, date, time, robot} = req.body;
+    const token = req.query.token;
     const decode = jwt.verify(token, jwtSecretkey);
 
     if (!errors.isEmpty()) {
@@ -47,6 +47,8 @@ const myBookedTimeSlot = (req, res) => {
                     res.status(200).json({ final_result: result });
                 })
 
+            } else {
+                res.status(400).json({ final_result: [] });
             }
         })
     }
