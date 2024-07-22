@@ -14,37 +14,70 @@ function MySchedule () {
     const [schedule, setSchedule] = useState([]);
     const [dateList, setDateList] = useState([]);
 
-    useEffect(() => {
-
-        const fetchMyBookedTime = async () => {
+    const fetchMyBookedTime = async () => {
+        try {
             const token = Cookies.get("ROBOT_TOKENS")
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/my-booked-timeslots?token=${token}`);
-            const data = await response.json()
+            const data = await response.json();
+
+            console.log(data);
+
             if (data.final_result.length > 0) {
-                const date = []
-                data.final_result.forEach(element => {
-                    if (!dateList.includes(element.date)) dateList.push(element.date)
+
+                const sortedTimeSchedule = data.final_result
+                .filter((element) => {
+                    return new Date(`${element.date} ${element.time}`) >= new Date();
+                })
+                .sort((spot1, spot2) => {
+                    return new Date(`${spot1.date} ${spot1.time}`) - new Date(`${spot2.date} ${spot2.time}`)
+                })
+
+                const date = [];
+
+                sortedTimeSchedule.forEach(element => {
+                    if (!date.includes( element.date )) {
+                        date.push(element.date)
+                    }
                 });
                 date.sort((a, b) => {
                     return new Date(a) - new Date(b);
                 })
-                const newDateList = dateList.filter((day) => {
-                    return new Date(day) >= new Date()
-                })
-                const sortedTimeSchedule = data.final_result.filter((spot1, spot2) => {
-                    return new Date(`${spot1.date} ${spot1.time}`) - new Date(`${spot2.date} ${spot2.time}`)
+
+                const newDateList = date.filter((day) => {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    return new Date(`${day}T00:00:00`) >= today
                 })
 
                 setDateList(newDateList);
                 setSchedule(sortedTimeSchedule);
+            } else {
+                setSchedule([]);
+                setDateList([]);
+            }
+        } catch (error) {
+            console.error("Error fetching booked time slots:", error);
         }
+    }
+
+    useEffect(() => {
+
         fetchMyBookedTime();
 
-        }
     }, [])
 
-    const handleCancel = () => {
-
+    const handleCancel = async (date, time, robot_option) => {
+        const token = Cookies.get("ROBOT_TOKENS");
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/cancel-booked-time?token=${token}&date=${date}&time=${time}&robot_option=${robot_option}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        const data = await response.json();
+        if (response.ok && data.message === "delete success") {
+            fetchMyBookedTime();
+        }
     }
 
     return (
@@ -60,7 +93,7 @@ function MySchedule () {
                                     <td>
                                         <img src={`/pictures/${item.robot_option}.jpg`} alt="gcp"/>
                                     </td>
-                                    <td><button onClick={handleCancel}>Cancel</button></td>
+                                    <td><button onClick={() => handleCancel(item.date, item.time, item.robot_option)}>Cancel</button></td>
                                 </tr>
                             )}
                         </tbody>
@@ -69,7 +102,6 @@ function MySchedule () {
                     
                 
             )}
-            <div>asdsadsad</div>
         </div>
     )
 

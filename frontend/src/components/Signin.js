@@ -34,6 +34,12 @@ export default function Signin(props) {
         }
     }
 
+    const handleEnterPress = (event) => {
+        if (event.key === 'Enter') {
+            onButtonClick();
+        }
+    }
+
 
 
     const onButtonClick = async() => {
@@ -73,7 +79,8 @@ export default function Signin(props) {
                             <td>
                                 <input type="password" className="input-style"
                                         placeholder="Enter your password"
-                                        onChange={(e) => setPassword(e.target.value)}/> 
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        onKeyPress={handleEnterPress}/> 
                             </td>
                         </tr>
 

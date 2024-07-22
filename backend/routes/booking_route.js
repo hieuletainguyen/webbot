@@ -19,5 +19,10 @@ router.get("/my-booked-timeslots",
     booking.myBookedTimeSlot
 )
 
+router.delete("/cancel-booked-time", 
+    booking.cancelMyBookedTime
+)
+
+
 
 module.exports = router;

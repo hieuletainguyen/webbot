@@ -34,6 +34,7 @@ function BookingCalendar () {
     }
 
     const handleChangeTime = async (chosen_time) => {
+        
         setTime(chosen_time);
         fetchBookedTime(formatedDate, chosen_time);
     }
@@ -79,7 +80,16 @@ function BookingCalendar () {
             setTime('');
             setRobot('');
             navigate('/booking-calendar')
-        } else {
+        }
+        else if (data.message === "Must only one slot") {
+            alert("You can only book one robot at a one timeslot")
+            setDate("");
+            setTime('');
+            setRobot('');
+            navigate('/booking-calendar')
+        }
+        
+        else {
             console.log(data);
         }
     }

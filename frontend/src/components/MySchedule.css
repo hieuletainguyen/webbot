@@ -31,9 +31,22 @@
     height: 50%;
     border-radius: 8px;
     font-size: 250%;
-
+    cursor: pointer;
+    box-shadow: 5px 10px #888888;
+    font-weight: bold;
 
 }
+
+.schedule-container button:hover {
+    background-color: rgb(180, 1, 1);
+    
+  }
+  
+  .schedule-container button:active {
+    background-color: rgb(180, 1, 1);
+    box-shadow: 0 5px #222222;
+    transform: translateY(4px);
+  }
 
 .schedule-container img {
     width: 28%
