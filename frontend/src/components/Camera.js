@@ -48,7 +48,9 @@ export default function Camera(props) {
             })
         });
 
-        if (response.ok) {
+        const data = await response.json();
+
+        if (response.ok && data.message === "Add image successfully") {
             props.setImgSrc(null);
             window.alert("Image Save Successfully");
         }
@@ -306,15 +308,8 @@ export default function Camera(props) {
                             
                         </>
                     }
-                    
-                    
-
                 </div> 
-
             </div>
-            
-            
-
         </>
     )
 };

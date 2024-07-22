@@ -14,6 +14,7 @@ import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
 import BookingCalendar from "./components/BookingCalendar";
 import MySchedule from "./components/MySchedule";
+import Gallery from "./components/Gallery";
 import Cookies from "js-cookie";
 
 
@@ -82,6 +83,8 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
 
           <Route path="/code-space" element={<CodingSpace /> } />
+
+          {isLoggedIn.status && <Route path="/gallery" element={<Gallery />} />}
 
           {isLoggedIn.status && <Route path="/booking-calendar" element={<BookingCalendar />} />}
         

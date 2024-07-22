@@ -7,6 +7,7 @@ const init_routes = require("./routes/init_routes")
 const account_routes = require("./routes/accounts_route")
 const controll_routes = require("./routes/controll_route")
 const booking_routes = require("./routes/booking_route")
+const image_routes = require("./routes/image_route")
 
 const port = 9897;
 
@@ -23,6 +24,8 @@ app.use(init_routes);
 app.use(account_routes);
 app.use(controll_routes);
 app.use(booking_routes);
+app.use(image_routes);
+
 
 
 app.listen(port, () => {

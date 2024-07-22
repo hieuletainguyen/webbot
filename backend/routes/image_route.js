@@ -14,12 +14,10 @@ router.post("/save-video",
 )
 
 router.get("/get-images", 
-    body("token").not().isEmpty(),
     images.getAllImages
 )
 
 router.get("/get-videos", 
-    body("token").not().isEmpty(),
     images.getAllVideos
 )
 

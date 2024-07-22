@@ -56,7 +56,18 @@ export default function NavBar(props) {
               CONTROL
             </StyledNavLink>
           </NavItem>
-          {isLoggedIn.status && 
+
+          {
+            isLoggedIn.status &&
+            <NavItem >
+              <StyledNavLink to="/gallery" activeclassname="active">
+                GALLERY
+              </StyledNavLink>
+            </NavItem>
+          }
+
+          {
+            isLoggedIn.status && 
             <NavItem>
               <StyledNavLink to="/booking-calendar" activeclassname="active">
                 BOOKING
