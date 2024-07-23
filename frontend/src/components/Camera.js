@@ -26,6 +26,7 @@ export default function Camera(props) {
     const handleSnapshot = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         props.setImgSrc(imageSrc);
+        console.log(imgSrc)
 
     }
 
@@ -116,7 +117,7 @@ export default function Camera(props) {
     };
 
     const saveVideo = async () => {
-        const response = await fetch(`${process.env.BACKEND_SERVER_URL}/save-video`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/save-video`, {
             method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
