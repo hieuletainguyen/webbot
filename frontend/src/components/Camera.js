@@ -26,7 +26,6 @@ export default function Camera(props) {
     const handleSnapshot = () => {
         const imageSrc = webcamRef.current.getScreenshot();
         props.setImgSrc(imageSrc);
-        console.log(imgSrc)
 
     }
 
@@ -117,19 +116,32 @@ export default function Camera(props) {
     };
 
     const saveVideo = async () => {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/save-video`, {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                token: Cookies.get("ROBOT_TOKENS"),
-                blob_video: videoBlob 
-            })
+        const blob = new Blob(recordedChunks, {
+            type: "video/webm"
         });
+        
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
 
-        if (response.ok) {
-            props.setVideoBlob(null);
-            props.setVideoURL(null);
-            window.alert("Video Save Successfully");
+        reader.onloadend = async () => {
+            console.log(reader.result)
+            const base64data = reader.result.split(',')[1];
+
+            console.log(base64data)
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/save-video`, {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    token: Cookies.get("ROBOT_TOKENS"),
+                    video_url: reader.result
+                })
+            });
+
+            if (response.ok) {
+                props.setVideoBlob(null);
+                props.setVideoURL(null);
+                window.alert("Video Save Successfully");
+            }
         }
     }
 

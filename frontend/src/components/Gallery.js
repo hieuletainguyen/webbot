@@ -10,7 +10,6 @@ function Gallery ()  {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/get-images?token=${token}`);
         const data = await response.json();
         setImages(data.final_result);
-        console.log(data);
     }
 
     const downloadImage = (imgSrc) => {
@@ -61,6 +60,7 @@ function Gallery ()  {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/get-videos?token=${token}`);
         const data = await response.json();
         setVideos(data.final_result);
+        console.log(data.final_result)
 
     }
 
@@ -75,7 +75,7 @@ function Gallery ()  {
             <h1>IMAGES</h1>
             <div className="image-container">
                 
-                {  
+                {  images.length > 0 &&
                     images.map((image) => 
                         <div className="image-card">
                             <img src={image.image} key={image.id} alt="Buffered Image"/>
@@ -91,12 +91,14 @@ function Gallery ()  {
             <h1>VIDEOS</h1>
             <div className="video-container">
                 
-                {
+                {videos.length > 0 &&
                     videos.map((video) => 
-                        <div className="card">
-                            <video src={video.video} key={video.id} alt="Buffered Video" />
-                            <button onClick={() => downloadVideo(video.video)}>Download</button>
-                            <button onClick={() => removeVideo(video.id)} >Remove</button>
+                        <div className="image-card" key={video.id}>
+                            <video src={video.video} key={video.id} controls alt="Buffered Video" />
+                            <div className="button-area">
+                                <button className="image-card-button"  onClick={() => downloadVideo(video.video)}>Download</button>
+                                <button className="image-card-button"  onClick={() => removeVideo(video.id)} >Remove</button>
+                            </div>
                         </div>
                     )
                 }

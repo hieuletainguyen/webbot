@@ -11,7 +11,7 @@ router.post("/save-image",
 
 router.post("/save-video", 
     body("token").not().isEmpty(),
-    body("blob_video").not().isEmpty(),
+    body("video_url").not().isEmpty(),
     images.saveVideo
 )
 

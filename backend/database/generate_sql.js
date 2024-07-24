@@ -30,7 +30,7 @@ sqlStatement.push(`
     CREATE TABLE IF NOT EXISTS videos (
         id INT AUTO_INCREMENT,
         username VARCHAR(50) NOT NULL,
-        video BLOB NOT NULL,
+        video LONGBLOB NOT NULL,
         time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     );

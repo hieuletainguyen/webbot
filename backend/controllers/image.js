@@ -33,10 +33,13 @@ const saveImage = (req, res) => {
 
 const saveVideo = (req, res) => {
 
-    const errors = validationResult(req);
-    const {blob_video, token} = req.body;
-    const decode = jwt.verify(token, jwtSecretkey);
+    console.log(req.body);
 
+    const errors = validationResult(req);
+    const {token, video_url} = req.body;
+    const decode = jwt.verify(token, jwtSecretkey);
+    const base64_video = Buffer.from(video_url, "base64");
+    
 
     if (errors.array().length > 0) {
         res.send(errors.array());
@@ -47,7 +50,7 @@ const saveVideo = (req, res) => {
 
             if (result.length === 1) {
                 const query_insert = "INSERT INTO videos (username, video) VALUES (?, ?)";
-                database.query(query_insert, [decode.username, blob_video], (err, result) => {
+                database.query(query_insert, [decode.username, base64_video], (err, result) => {
                     if (err) throw err;
 
                     res.status(200).json({message: 'Add video successfully'})
@@ -111,8 +114,19 @@ const getAllVideos = (req, res) => {
                 const query_insert = "SELECT * FROM videos WHERE username = ?";
                 database.query(query_insert, [decode.username], (err, result) => {
                     if (err) throw err;
+                    console.log("this is result")
+                    console.log(result)
+                    const results = result.map(r => {
+                        const base64Video = r.video.toString('base64');
+                        return {
+                            id: r.id, 
+                            video: base64Video.replace("datavideo/webmbase64", "data:video/webm;base64,")
+                        };
+                    });
 
-                    res.status(200).json({final_result: result});
+                    console.log("This is new results")
+                    console.log(results)
+                    res.status(200).json({final_result: results});
                 })
             }
         })
