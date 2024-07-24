@@ -6,7 +6,7 @@ export default function Home() {
             <div className="main-container">
 
                 
-                    <h1 className='block1'>WECLOME</h1>
+                    <h1 className='block1'>WELCOME</h1>
                     <div className="description1">
                         <p>Welcome to Webbot, where you can step into the future of robotics. </p>
                         <p>Operate our advanced robot arm remotely, book your sessions, and dive into real-time control with live video feedback. </p>

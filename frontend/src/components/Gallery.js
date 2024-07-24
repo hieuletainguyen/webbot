@@ -77,11 +77,11 @@ function Gallery ()  {
                 
                 {  
                     images.map((image) => 
-                        <div className="card">
+                        <div className="image-card">
                             <img src={image.image} key={image.id} alt="Buffered Image"/>
-                            <div>
-                                <button onClick={() => downloadImage(image.image)}>Download</button>
-                                <button onClick={() => removeImage(image.id)}>Remove</button>
+                            <div className="button-area">
+                                <button className="image-card-button" onClick={() => downloadImage(image.image)}>Download</button>
+                                <button className="image-card-button" onClick={() => removeImage(image.id)}>Remove</button>
                             </div>
                         </div>
                     )
