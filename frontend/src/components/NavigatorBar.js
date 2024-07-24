@@ -31,7 +31,7 @@ export default function NavBar(props) {
         props.setIsLoggedIn({
             ...props.isLoggedIn, 
             status: false, 
-            username: "" 
+            email: "" 
         })
         navigate('/');
       } else {

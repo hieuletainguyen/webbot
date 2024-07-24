@@ -2,8 +2,8 @@ const { validationResult } = require('express-validator');
 const database = require('../database/db');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {jwtSecretkey, generate_salt} = require("../secret-data");
-
+const {jwtSecretkey, generate_salt, myEmail} = require("../secret-data");
+const transport = require("../database/host_email")
 
 
 const addAccount = async (req, res) => {
@@ -13,20 +13,20 @@ const addAccount = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
         const salt = await generate_salt();
         const hash_password = await bcrypt.hash(password, salt);
 
-        const uniqueQuery = "SELECT distinct(username) FROM accounts WHERE username = ?";
-        database.query(uniqueQuery, username, (err, result) => {
+        const uniqueQuery = "SELECT distinct(email) FROM accounts WHERE email = ?";
+        database.query(uniqueQuery, email, (err, result) => {
             if (err) throw err
             console.log(result);
             if (result.length > 0) {
-                return res.status(400).json({ message: "Username already exists" });
+                return res.status(400).json({ message: "email already exists" });
             } else {
-                const insertQuery = "INSERT INTO accounts (username, password) VALUES (?, ?)";
-                database.query(insertQuery, [username, hash_password], (err, result) => {
+                const insertQuery = "INSERT INTO accounts (email, password) VALUES (?, ?)";
+                database.query(insertQuery, [email, hash_password], (err, result) => {
                     return res.status(200).json({message: "success"});
                 });
                 
@@ -39,11 +39,11 @@ const addAccount = async (req, res) => {
 };
 
 const authorization = async (req, res) => {
-    const {username, password} = req.body;
+    const {email, password} = req.body;
 
-    const sqlQuery = "SELECT * FROM accounts WHERE username = ?";
+    const sqlQuery = "SELECT * FROM accounts WHERE email = ?";
 
-    database.query(sqlQuery, [username], async (err, result) => {
+    database.query(sqlQuery, [email], async (err, result) => {
         if (err) {
             return res.status(500).send({message: "Server Error"});
         };
@@ -57,7 +57,7 @@ const authorization = async (req, res) => {
     
             if (match)   {
             
-                const token = jwt.sign({username: username}, jwtSecretkey, {expiresIn: "1h"});
+                const token = jwt.sign({email: email}, jwtSecretkey, {expiresIn: "1h"});
 
                 const query1 = "INSERT INTO tokens (token) VALUES (?)";
 
@@ -70,11 +70,11 @@ const authorization = async (req, res) => {
                 })
 
             } else {
-                res.status(401).json({message: "Invalid username or password", final_result: match});
+                res.status(401).json({message: "Invalid email or password", final_result: match});
             }
     
         } else {
-            res.status(401).json({message: "Invalid username or password", final_result: result})
+            res.status(401).json({message: "Invalid email or password", final_result: result})
         }
 
     });
@@ -94,7 +94,7 @@ const decode_token = (req, res) => {
                     if (err) throw err;
 
                     if (result.rowCount === 1) {
-                        res.status(200).json({message: "success", username: decoded.username})
+                        res.status(200).json({message: "success", email: decoded.email})
                     } else {
                         res.status(401).json({message: "Invalid token"})
                     }
@@ -121,11 +121,11 @@ const logout = (req, res) => {
 }
 
 const checkAccount = (req, res) => {
-    const {username} = req.body;
+    const {email} = req.body;
 
-    const sqlQuery = "SELECT * FROM accounts WHERE username = ?";
+    const sqlQuery = "SELECT * FROM accounts WHERE email = ?";
 
-    database.query(sqlQuery, username, (err, result) => {
+    database.query(sqlQuery, email, (err, result) => {
         if (err) throw err;
 
         if (result.length === 0){
@@ -137,11 +137,51 @@ const checkAccount = (req, res) => {
     })
 };
 
+const forgotPassword = (req, res) => {
+    const email = req.query.email;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } else {
+        const sqlQuery = "SELECT * FROM accounts WHERE email = ?";
+        database.query(sqlQuery, [email], (err, result) => {
+            if (err) throw err;
+            if (result.length === 0) {
+                res.json({message: "Email not found!"})
+            } else {
+                const token = jwt.sign({email: email}, jwtSecretkey, {expiresIn: "1h"});
+
+                const message = {
+                    from: myEmail,
+                    to: email,
+                    subject: "Reset Password",
+                    text: `Please click on the link to reset your password: \n
+                    ${process.env.FRONTEND_URL}/reset-password?token=${encodeURIComponent(token)}&email=${email}`
+                }
+
+                transport.sendMail(message, (err, result) => {
+                    if (err) throw err;
+                    res.status(200).json({message: "Email sent!"})
+                })
+
+                res.status(200).json({message: "send recover email successfully"})
+            }
+
+        })
+    }
+}
+
+const recoverPassword = (res, req) => {
+    const token = req.query.token;
+}
 
 module.exports = {
     checkAccount,
     authorization,
     addAccount, 
     logout, 
-    decode_token
+    decode_token ,
+    forgotPassword, 
+    recoverPassword
 }

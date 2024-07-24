@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import Cookies from "js-cookie";
 
 export default function Signin(props) {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -12,22 +12,22 @@ export default function Signin(props) {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
             method: "POST", 
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({email, password})
         })
 
         const data = await response.json();
         if (data.message === 'success') {
-            localStorage.setItem("user", JSON.stringify({username, token: data.token}))
+            localStorage.setItem("user", JSON.stringify({email, token: data.token}))
             props.setIsLoggedIn({
                 ...props.isLoggedIn, 
                 status: true, 
-                username: username
+                email: email
             });
             
             Cookies.set("ROBOT_TOKENS", data.token, {expires: 1});
             navigate('/');
         }  else if(data.message === "fail") {
-            window.alert("Incorrect password or username");
+            window.alert("Incorrect password or email");
 
         } else {
             console.log(data);
@@ -43,8 +43,8 @@ export default function Signin(props) {
 
 
     const onButtonClick = async() => {
-        if ("" === username){
-            window.alert("You need to have a username");
+        if ("" === email){
+            window.alert("You need to enter an email");
             return;
         }
 
@@ -57,6 +57,8 @@ export default function Signin(props) {
         validate();
     }
 
+   
+
     return (
         
             
@@ -65,11 +67,11 @@ export default function Signin(props) {
                 <table className="table-container">
                     <tbody>
                         <tr>
-                            <td className="title-styled">Username</td>
+                            <td className="title-styled">Email</td>
                             <td>
                                 <input type="text" className="input-style" 
-                                        placeholder="Enter your username"
-                                        onChange={(e) => setUsername(e.target.value)}/> 
+                                        placeholder="Enter your email"
+                                        onChange={(e) => setEmail(e.target.value)}/> 
                             </td>
                         </tr>
 
@@ -90,6 +92,7 @@ export default function Signin(props) {
 
                 <div>
                     <input type="button" value={"Sign in"} onClick={onButtonClick}/>
+                    <input type="button" value={"Forget Password"} onClick={() => navigate('/forgot-password')}/>
                 </div>
             </div>
 

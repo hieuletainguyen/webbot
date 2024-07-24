@@ -1,6 +1,7 @@
-FROM node:14 
+FROM alpine:latest
 WORKDIR /app
 COPY . .
+RUN apk add --update nodejs npm
 RUN npm install 
 ENV PORT=3000
 EXPOSE 3000

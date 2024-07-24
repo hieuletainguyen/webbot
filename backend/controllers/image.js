@@ -12,15 +12,15 @@ const saveImage = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
             console.log("this is result 1")
             console.log(result);
 
             if (result.length === 1) {
-                const query_insert = "INSERT INTO images (username, image) VALUES (?, ?)";
-                database.query(query_insert, [decode.username, blob_image], (err, result) => {
+                const query_insert = "INSERT INTO images (email, image) VALUES (?, ?)";
+                database.query(query_insert, [decode.email, blob_image], (err, result) => {
                     if (err) throw err;
 
                     res.status(200).json({message: 'Add image successfully'})
@@ -44,13 +44,13 @@ const saveVideo = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_insert = "INSERT INTO videos (username, video) VALUES (?, ?)";
-                database.query(query_insert, [decode.username, base64_video], (err, result) => {
+                const query_insert = "INSERT INTO videos (email, video) VALUES (?, ?)";
+                database.query(query_insert, [decode.email, base64_video], (err, result) => {
                     if (err) throw err;
 
                     res.status(200).json({message: 'Add video successfully'})
@@ -70,13 +70,13 @@ const getAllImages = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_insert = "SELECT * FROM images WHERE username = ?";
-                database.query(query_insert, [decode.username], (err, result) => {
+                const query_insert = "SELECT * FROM images WHERE email = ?";
+                database.query(query_insert, [decode.email], (err, result) => {
                     if (err) throw err;
 
                     console.log(result);
@@ -106,13 +106,13 @@ const getAllVideos = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_insert = "SELECT * FROM videos WHERE username = ?";
-                database.query(query_insert, [decode.username], (err, result) => {
+                const query_insert = "SELECT * FROM videos WHERE email = ?";
+                database.query(query_insert, [decode.email], (err, result) => {
                     if (err) throw err;
                     console.log("this is result")
                     console.log(result)
@@ -144,13 +144,13 @@ const deleteImage = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_insert = "DELETE FROM images WHERE username = ? AND id = ?";
-                database.query(query_insert, [decode.username, id], (err, result) => {
+                const query_insert = "DELETE FROM images WHERE email = ? AND id = ?";
+                database.query(query_insert, [decode.email, id], (err, result) => {
                     if (err) throw err;
 
                     res.status(200).json({message: "delete image successfully"});
@@ -171,13 +171,13 @@ const deleteVideo = (req, res) => {
     if (errors.array().length > 0) {
         res.send(errors.array());
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_insert = "DELETE FROM videos WHERE username = ? AND id = ?";
-                database.query(query_insert, [decode.username, id], (err, result) => {
+                const query_insert = "DELETE FROM videos WHERE email = ? AND id = ?";
+                database.query(query_insert, [decode.email, id], (err, result) => {
                     if (err) throw err;
 
                     res.status(200).json({message: "delete video successfully"});

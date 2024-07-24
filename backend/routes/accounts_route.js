@@ -5,13 +5,13 @@ const {body} =  require('express-validator');
 
 
 router.post("/add-account", 
-    body("username").not().isEmpty().escape(),
+    body('email').isEmail(),
     body("password").not().isEmpty().escape(),
     account.addAccount
 )
 
 router.post("/auth", 
-    body("username").not().isEmpty().escape(),
+    body('email').isEmail(),
     body("password").not().isEmpty().escape(),
     account.authorization
 )
@@ -23,6 +23,13 @@ router.post('/logout',
 router.post("/auth_token", 
     account.decode_token
 )
+
+router.post("/forgot-password", 
+    body('email').isEmail(),
+    account.forgotPassword
+)
+
+router.post("/")
 
 module.exports = router;
 

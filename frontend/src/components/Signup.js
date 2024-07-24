@@ -3,7 +3,7 @@ import "./Signup-in.css";
 import {useNavigate} from "react-router-dom";
 
 export default function Signup (props) {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [correct, setCorrect] = useState(false);
     const navigate = useNavigate();
@@ -14,19 +14,19 @@ export default function Signup (props) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({username, password}),
+            body: JSON.stringify({email, password}),
         })    
         const data = await result.json();
         console.log(data);
         
         if (data.message === "success"){
             console.log("register account sucessfully")
-            setUsername("");
+            setEmail("");
             setPassword("");
             navigate("/");
-        } else if (data.message === "username already exists") {
+        } else if (data.message === "email already exists") {
             window.alert("Account already exists");
-            setUsername("");
+            setEmail("");
             setPassword("");
         }
     }
@@ -40,8 +40,8 @@ export default function Signup (props) {
 
 
     const onButtonClick = async() => {
-        if ("" === username){
-            window.alert("You need to have a username");
+        if ("" === email){
+            window.alert("You need to have a email");
             return;
         }
 
@@ -61,11 +61,11 @@ export default function Signup (props) {
                 <table className="table-container">
                     <tbody>
                         <tr>
-                            <td className="title-styled">Username</td>
+                            <td className="title-styled">Email</td>
                             <td>
                                 <input type="text" className="input-style" 
-                                        placeholder="Enter your username"
-                                        onChange={(e) => setUsername(e.target.value)}/> 
+                                        placeholder="Enter your email"
+                                        onChange={(e) => setEmail(e.target.value)}/> 
                             </td>
                         </tr>
 

@@ -32,6 +32,8 @@ function MySchedule () {
                     return new Date(`${spot1.date} ${spot1.time}`) - new Date(`${spot2.date} ${spot2.time}`)
                 })
 
+                console.log(sortedTimeSchedule)
+
                 const date = [];
 
                 sortedTimeSchedule.forEach(element => {
@@ -48,6 +50,8 @@ function MySchedule () {
                     today.setHours(0, 0, 0, 0);
                     return new Date(`${day}T00:00:00`) >= today
                 })
+
+                console.log(newDateList)
 
                 setDateList(newDateList);
                 setSchedule(sortedTimeSchedule);

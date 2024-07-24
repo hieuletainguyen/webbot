@@ -93,7 +93,7 @@ export default function Home() {
                 </div>
 
                 <div className="card">
-                    <img src="/pictures/postgresql.png" alt="postgresql"/>
+                    <img src="/pictures/mysql.png" alt="mysql"/>
                     
                     <p>adsfasrgteg</p>
                 </div>

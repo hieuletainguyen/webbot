@@ -11,18 +11,18 @@ const bookRobot = (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const booked_timeslot = "SELECT * FROM booking_schedule WHERE username = ? AND date = ? AND time = ?";
-                database.query(booked_timeslot, [decode.username, date, time], (err, result) => {
+                const booked_timeslot = "SELECT * FROM booking_schedule WHERE email = ? AND date = ? AND time = ?";
+                database.query(booked_timeslot, [decode.email, date, time], (err, result) => {
                     if (err) throw err;
 
                     if (result.length === 0) {
-                        const query_book = "INSERT INTO booking_schedule (username, date, time, robot_option) VALUES (?, ?, ?, ?)";
-                        database.query(query_book, [decode.username, date, time, robot], (err, result) => {
+                        const query_book = "INSERT INTO booking_schedule (email, date, time, robot_option) VALUES (?, ?, ?, ?)";
+                        database.query(query_book, [decode.email, date, time, robot], (err, result) => {
                             if (err) throw err;
                             res.status(200).json({ message: "Booking Success" });
                         })
@@ -49,13 +49,13 @@ const myBookedTimeSlot = (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_book = "SELECT * FROM booking_schedule WHERE username = ?";
-                database.query(query_book, [decode.username], (err, result) => {
+                const query_book = "SELECT * FROM booking_schedule WHERE email = ?";
+                database.query(query_book, [decode.email], (err, result) => {
                     if (err) throw err;
                     console.log(result)
                     res.status(200).json({ final_result: result });
@@ -80,13 +80,13 @@ const cancelMyBookedTime  = (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
-        const query_auth = "SELECT * FROM accounts WHERE username = ?";
-        database.query(query_auth, [decode.username], (err, result) => {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], (err, result) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const query_book = "DELETE FROM booking_schedule WHERE username = ? AND date = ? AND time = ? AND robot_option = ?";
-                database.query(query_book, [decode.username, date, time, robot_option], (err, result) => {
+                const query_book = "DELETE FROM booking_schedule WHERE email = ? AND date = ? AND time = ? AND robot_option = ?";
+                database.query(query_book, [decode.email, date, time, robot_option], (err, result) => {
                     if (err) throw err;
                     res.status(200).json({message: "delete success"})
                 })

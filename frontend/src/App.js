@@ -15,6 +15,8 @@ import UserProfile from "./components/UserProfile";
 import BookingCalendar from "./components/BookingCalendar";
 import MySchedule from "./components/MySchedule";
 import Gallery from "./components/Gallery";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import Cookies from "js-cookie";
 
 
@@ -35,6 +37,8 @@ function App() {
   const [imgSrc, setImgSrc] = useState(null);
   const [videoURL, setVideoURL] = useState(null);
   const [videoBlob, setVideoBlob] = useState(null);
+
+  const [allowedToReset, setAllowedToReset] = useState(false);
 
   useEffect(() => {
     const auth = async () => {
@@ -89,6 +93,14 @@ function App() {
           {isLoggedIn.status && <Route path="/booking-calendar" element={<BookingCalendar />} />}
         
           {isLoggedIn.status && <Route path="/my-booking-schedule" element={<MySchedule />} />}
+        
+          {
+            !isLoggedIn.status && <Route path="/forgot-password" element={<ForgotPassword allowedToReset={allowedToReset} setAllowedToReset={setAllowedToReset}/>} />
+          }
+
+          {
+            !isLoggedIn.status && allowedToReset && <Route path="/reset-password" element={<ResetPassword />} />
+          }
         </Routes>
       </Router>
 
