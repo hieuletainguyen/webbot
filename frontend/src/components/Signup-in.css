@@ -40,7 +40,7 @@
 }
 
 input[type=button] {
-background-color: rgb(184, 142, 26);
+    background-color: rgb(184, 142, 26);
   border: none;
   color: black;
   padding: 16px 32px;
@@ -50,4 +50,31 @@ background-color: rgb(184, 142, 26);
   margin: 4px 2px;
   border-radius: 16px;
   cursor: pointer;
+  box-shadow: 5px 10px #888888;
+  margin: 10px;
+}
+
+input[type=button]:hover {
+    background-color: rgb(145, 114, 29);
+
+}
+
+input[type=button]:active {
+    background-color: rgb(145, 114, 29);
+    box-shadow: 0 5px #222222;
+    transform: translateY(4px);
+}
+
+.sent-recovery-email {
+    display: flex;
+    border-radius: 18px;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 100px ;
+    font-weight: bold;
+    border: 8px solid grey;
+    margin-left: 50px;
+    margin-right: 50px;
+
 }

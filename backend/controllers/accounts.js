@@ -138,7 +138,7 @@ const checkAccount = (req, res) => {
 };
 
 const forgotPassword = (req, res) => {
-    const email = req.query.email;
+    const email = req.body.email;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -160,6 +160,8 @@ const forgotPassword = (req, res) => {
                     ${process.env.FRONTEND_URL}/reset-password?token=${encodeURIComponent(token)}&email=${email}`
                 }
 
+                console.log(result);
+
                 sendEmail(message)
 
                 res.status(200).json({message: "send recover email successfully", allowedToReset: true})
@@ -170,14 +172,33 @@ const forgotPassword = (req, res) => {
 }
 
 const resetPassword = (res, req) => {
-    const token = req.query.token;
-    const password1 = req.body.password1;
-    const password2 = req.body.password2;
+    const token = req.body.token;
+    const password = req.body.password1;
+    const email = req.body.email;
+    const decode = jwt.verify(token, jwtSecretkey);
 
-    if (password1 !== password2) {
-        res.json({message: "Password not match!"})
-    } 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } else {
+        const query_auth = "SELECT * FROM accounts WHERE email = ?";
+        database.query(query_auth, [decode.email], async (err, result) => {
+            if (err) throw err;
 
+            if (result.length === 1) {
+                const salt = await generate_salt();
+                const hash_password = await bcrypt.hash(password, salt);
+                const query_insert = "UPDATE accounts SET password = ? WHERE email = ?";
+                database.query(query_insert, [hash_password, decode.email], (err, result) => {
+                    if (err) throw err;
+                    console.log(result)
+                    res.status(200).json({message: "Update password completed"})
+
+                })
+            }
+        })
+
+    }
 
 }
 

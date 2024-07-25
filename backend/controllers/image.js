@@ -114,8 +114,6 @@ const getAllVideos = (req, res) => {
                 const query_insert = "SELECT * FROM videos WHERE email = ?";
                 database.query(query_insert, [decode.email], (err, result) => {
                     if (err) throw err;
-                    console.log("this is result")
-                    console.log(result)
                     const results = result.map(r => {
                         const base64Video = r.video.toString('base64');
                         return {

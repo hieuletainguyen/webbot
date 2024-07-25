@@ -99,7 +99,7 @@ function App() {
           }
 
           {
-            !isLoggedIn.status && allowedToReset && <Route path="/reset-password" element={<ResetPassword />} />
+            !isLoggedIn.status && <Route path="/reset-password" element={<ResetPassword />} />
           }
         </Routes>
       </Router>
