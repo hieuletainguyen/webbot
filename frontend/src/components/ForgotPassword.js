@@ -1,5 +1,6 @@
 import {useState} from "react";
-
+import "./Signup-in.css";
+import {useNavigate} from "react-router-dom";
 
 function ForgotPassword (props) {
     const allowedToReset = props.allowedToReset;
@@ -15,7 +16,14 @@ function ForgotPassword (props) {
         })
 
         const data = await response.json();
-        
+        if (data.message === "send recover email successfully") {
+            props.setAllowedToReset(data.allowedToReset)
+            setTimeout(() => {
+                props.setAllowedToReset(false)
+            }, 1000*60*60);
+        } else {
+            console.log(data)
+        }
 
     }
 
@@ -34,12 +42,28 @@ function ForgotPassword (props) {
     }
 
     return (
-        <div>
-            <h1>Forgot Password</h1>
-            <p>Enter your email address below and we will send you a link to reset your password</p>
-            <input type="text" onChange={(e) => setEmail(e.target.value)}
-                                        onKeyPress={handleEnterPress}/> 
-        </div>
+        <div className="signup-subcontainer">
+                <h2>Forgot Password</h2>
+                <table className="table-container">
+                    <tbody>
+                        <tr>
+                            <td>Enter your email address below and we will send you a link to reset your password</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" className="input-style" 
+                                        placeholder="Enter your email"
+                                        onChange={(e) => setEmail(e.target.value)}/> 
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <div>
+                    <input type="button" value={"Submit"} onClick={handleEnterPress}/>
+                </div>
+            </div>
     )
 }
 

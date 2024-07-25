@@ -1,13 +1,22 @@
 const nodemailer = require("nodemailer");
-const {myEmail, myEmailPassword} = require("../secret-data")
+const {user, myEmail, myEmailPassword} = require("../secret-data")
 
-const transport = nodemailer.createTransport({
-    host: myEmail,
-    secure: true, 
-    auth: {
-        user: myEmail,
-        pass: myEmailPassword
-    }
-})
+const sendEmail = async ({to, subject, text, from = process.env.EMAIL_FROM || myEmail}) => {
+    const transporter = nodemailer.createTransport({
+        host: "smtp.ethereal.email", 
+        port: 587,
+        auth: {
+            user: process.env.USER || user,
+            pass: myEmailPassword
+        }
+    })
 
-exports.module = transport
+    await transporter.sendMail({from, to, subject, text});
+
+    console.log("email sent successfully")
+
+}
+
+module.exports = {
+    sendEmail
+}

@@ -29,7 +29,9 @@ router.post("/forgot-password",
     account.forgotPassword
 )
 
-router.post("/")
+router.post("/reset-password", 
+    account.resetPassword
+)
 
 module.exports = router;
 

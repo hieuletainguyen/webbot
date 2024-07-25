@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const {jwtSecretkey, generate_salt, myEmail} = require("../secret-data");
 const transport = require("../database/host_email")
-
+const {sendEmail} = require("../database/host_email")
 
 const addAccount = async (req, res) => {
     const errors = validationResult(req);
@@ -160,20 +160,25 @@ const forgotPassword = (req, res) => {
                     ${process.env.FRONTEND_URL}/reset-password?token=${encodeURIComponent(token)}&email=${email}`
                 }
 
-                transport.sendMail(message, (err, result) => {
-                    if (err) throw err;
-                    res.status(200).json({message: "Email sent!"})
-                })
+                sendEmail(message)
 
-                res.status(200).json({message: "send recover email successfully"})
+                res.status(200).json({message: "send recover email successfully", allowedToReset: true})
             }
 
         })
     }
 }
 
-const recoverPassword = (res, req) => {
+const resetPassword = (res, req) => {
     const token = req.query.token;
+    const password1 = req.body.password1;
+    const password2 = req.body.password2;
+
+    if (password1 !== password2) {
+        res.json({message: "Password not match!"})
+    } 
+
+
 }
 
 module.exports = {
@@ -183,5 +188,5 @@ module.exports = {
     logout, 
     decode_token ,
     forgotPassword, 
-    recoverPassword
+    resetPassword
 }
