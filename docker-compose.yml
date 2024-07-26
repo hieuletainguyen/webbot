@@ -6,15 +6,15 @@ services:
     depends_on:
       - backend
     container_name: frontend
-    build: 
-      context: ./frontend
+    build: ./frontend
     environment:
-      - REACT_APP_BACKEND_URL=http://backend:9897
+      - REACT_APP_BACKEND_URL=http://localhost:9897
     volumes:
       - frontend-data:/frontend-app
     ports:
       - "3000:3000"
-
+    networks:
+      - app-network
 
   backend: 
     depends_on:
@@ -31,7 +31,9 @@ services:
       - DB_USER=${MYSQLDB_USER}
       - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
       - DB_NAME=${MYSQLDB_DATABASES}
-      - FRONTEND_URL=http://frontend:3000 
+      - FRONTEND_URL=http://localhost:3000 
+    networks:
+      - app-network
       
   
   mysql-container:
@@ -46,7 +48,13 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./postgresql-init:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
   
+networks:
+  app-network:
+    driver: bridge
+
 
 volumes: 
   db:

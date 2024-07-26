@@ -1,10 +1,22 @@
-FROM alpine:latest
+# Use an official Node.js image
+FROM node:18-alpine
+
+# Set working directory
 WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy the rest of the application code
 COPY . .
-RUN apk add --update nodejs npm
-RUN npm install 
+
+# Set environment variable
 ENV PORT=3000
+
+# Expose port 3000
 EXPOSE 3000
-ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
-VOLUME [ "/frontend-app" ]
+ENV REACT_APP_BACKEND_URL=http://backend:9897
+
+# Start the application
 CMD ["npm", "start"]
