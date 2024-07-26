@@ -26,7 +26,7 @@ export default function Signin(props) {
             
             Cookies.set("ROBOT_TOKENS", data.token, {expires: 1});
             navigate('/');
-        }  else if(data.message === "fail") {
+        }  else if(data.message === "Invalid email or password") {
             window.alert("Incorrect password or email");
 
         } else {

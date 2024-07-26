@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import "./Signup-in.css";
 import {useSearchParams , useNavigate} from "react-router-dom";
 function ResetPassword (props) {
-    const [password1, setPassword1] = useState('');
+    const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [searchParams] = useSearchParams();
     const token = searchParams.get('token');
@@ -10,18 +10,26 @@ function ResetPassword (props) {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log("searchParams: ", searchParams);
+        console.log('Token:', token);
+        console.log('Email:', email);
+      }, [token, email]);
+
 
     const validate = async () => {
-        if (password1 !== password2) {
+        if (password !== password2) {
             alert('Passwords do not match');
         } else {
+            console.log(token);
+            console.log(email);
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/reset-password`, {
                 method: "POST", 
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    email: email, 
-                    password1: password1, 
-                    token: token
+                    email, 
+                    password, 
+                    token
                 })
             })
 
@@ -48,7 +56,7 @@ function ResetPassword (props) {
             return;
         }
 
-        if ("" === password1) {
+        if ("" === password) {
             window.alert("You need to set a new password");
             return ;
         }
@@ -67,7 +75,7 @@ function ResetPassword (props) {
                                 <td>
                                     <input type="text" className="input-style" 
                                             placeholder="Enter your new password"
-                                            onChange={(e) => setPassword1(e.target.value)}
+                                            onChange={(e) => setPassword(e.target.value)}
                                             /> 
                                 </td>
                             </tr>

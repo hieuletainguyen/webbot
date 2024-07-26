@@ -171,10 +171,9 @@ const forgotPassword = (req, res) => {
     }
 }
 
-const resetPassword = (res, req) => {
-    const token = req.body.token;
-    const password = req.body.password1;
-    const email = req.body.email;
+const resetPassword = (req, res) => {
+    console.log(req.body)
+    const {email, password, token} = req.body;
     const decode = jwt.verify(token, jwtSecretkey);
 
     const errors = validationResult(req);
