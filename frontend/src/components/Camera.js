@@ -264,17 +264,6 @@ export default function Camera(props) {
                                 </tr>
 
                                 <tr className="control-row">
-                                    <td>Claw X</td>
-                                    <td>
-                                        <input type="range" min="0" max="180"
-                                                id="baseSlider" onChange={(e) => updateValue(e, "clawx")}/>
-                                    </td>
-                                    <td>{armData.clawx}</td>
-
-
-                                </tr>
-
-                                <tr className="control-row">
                                     <td>Claw Y</td>
                                     <td>
                                         <input type="range" min="0" max="180"
@@ -286,12 +275,23 @@ export default function Camera(props) {
                                 </tr>
 
                                 <tr className="control-row">
-                                    <td>Claw</td>
+                                    <td>Claw Z</td>
+                                    <td>
+                                        <input type="range" min="0" max="180"
+                                                id="baseSlider" onChange={(e) => updateValue(e, "clawz")}/>
+                                    </td>
+                                    <td>{armData.clawz}</td>
+
+
+                                </tr>
+
+                                <tr className="control-row">
+                                    <td>End effector</td>
                                     <td>
                                         <input type="range" min="0" max="180" 
-                                                id="baseSlider" onChange={(e) => updateValue(e, "claw")}/>
+                                                id="baseSlider" onChange={(e) => updateValue(e, "ee")}/>
                                     </td>
-                                    <td>{armData.claw}</td>
+                                    <td>{armData.ee}</td>
 
 
                                 </tr>

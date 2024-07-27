@@ -25,9 +25,9 @@ function App() {
     "base": 49,
     "arm1": 49,
     "arm2": 49,
-    "clawx": 49,
     "clawy": 49,
-    "claw": 49
+    "clawz": 49,
+    "ee": 49
   })
   const [isLoggedIn, setIsLoggedIn] = useState({
     status: false,

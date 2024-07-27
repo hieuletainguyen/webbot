@@ -13,6 +13,10 @@ MYSQLDB_USER=
 MYSQLDB_ROOT_PASSWORD=
 MYSQLDB_LOCAL_PORT=
 MYSQLDB_DOCKER_PORT=
+
+REACT_APP_BACKEND_URL=
+
+FRONTEND_URL= 
 ```
 
 Need to create a config.h file in the **ESP32_main_service** folder

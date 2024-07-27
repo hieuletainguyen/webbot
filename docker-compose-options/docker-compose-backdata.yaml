@@ -2,19 +2,6 @@ version: "3.8"
 
 services: 
 
-  frontend:
-    depends_on:
-      - backend
-    container_name: frontend
-    build: ./frontend
-    environment:
-      - REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
-    volumes:
-      - frontend-data:/frontend-app
-    ports:
-      - "3000:3000"
-
-
   backend: 
     depends_on:
       - mysql-container
@@ -32,6 +19,7 @@ services:
       - DB_NAME=robot_accounts
       - FRONTEND_URL=${FRONTEND_URL}
 
+      
   
   mysql-container:
     image: mysql:8
@@ -45,6 +33,7 @@ services:
     volumes:
       - db:/var/lib/mysql
       - ./mysql-init:/docker-entrypoint-initdb.d
+
 
 
 volumes: 

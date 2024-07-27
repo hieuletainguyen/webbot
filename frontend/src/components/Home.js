@@ -22,24 +22,21 @@ export default function Home() {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- 5 degrees of freedom (DoF) robot arm + 1 end effector</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- 3 servo motors (MS18) and 3 servo motor (MG996R)</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Robot arm connects to ESP32</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- 3D printed body using PLA and ABS material.</td>
                                 </tr>
 
-                                <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
-                                </tr>
                             </tbody>
                         </table>
                             
@@ -52,23 +49,23 @@ export default function Home() {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Provides users with a live feed of the robot arm’s environment, allowing for intuitive control.</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Users can see the position of objects relative to the robot arm and make precise adjustments.</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Live video stream helps users make quick decisions and enhances the accuracy of control.</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Strategically placed to offer the best possible view of the workspace and the robot arm’s actions.</td>
                                 </tr>
 
                                 <tr>
-                                    <td>- adfadsq qe ef  qa d dfaaad adf rgafg gafg f</td>
+                                    <td>- Integration with the control system for seamless user interaction and object manipulation.</td>
                                 </tr>
                             </tbody>
                         </table>

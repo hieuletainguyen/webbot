@@ -1,5 +1,5 @@
 import Camera from "./Camera";
-import {useState, useRef} from "react";
+import { useRef} from "react";
 import "./Controll.css"
 export default function Controller (props) {
     const webcamRef = useRef(null);
