@@ -5,6 +5,8 @@ function ResetPassword (props) {
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
     const [searchParams] = useSearchParams();
+    const [showPassword, setShowPassword] = useState(false)
+
     const token = searchParams.get('token');
     const email = searchParams.get('email');
 
@@ -16,6 +18,11 @@ function ResetPassword (props) {
         console.log('Email:', email);
       }, [token, email]);
 
+    const showPasswordOnClick = () => {
+        setShowPassword(!showPassword);
+        console.log(showPassword)
+    }
+   
 
     const validate = async () => {
         if (password !== password2) {
@@ -73,7 +80,7 @@ function ResetPassword (props) {
                             <tr>
                                 <td className="title-styled">New Password</td>
                                 <td>
-                                    <input type="text" className="input-style" 
+                                    <input type={showPassword ? "text": "password"} className="input-style" 
                                             placeholder="Enter your new password"
                                             onChange={(e) => setPassword(e.target.value)}
                                             /> 
@@ -83,10 +90,18 @@ function ResetPassword (props) {
                             <tr>
                                 <td className="title-styled">Retype Password</td>
                                 <td>
-                                    <input type="text" className="input-style" 
+                                    <input type={showPassword ? "text": "password"} className="input-style" 
                                             placeholder="Retype your password"
                                             onChange={(e) => setPassword2(e.target.value)}
                                             onKeyPress={handleEnterPress}/> 
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                <input type='checkbox' value={showPassword} onClick={showPasswordOnClick}/>
+                                <label>Show Password</label>
                                 </td>
                             </tr>
                         </tbody>

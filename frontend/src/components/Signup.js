@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 export default function Signup (props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [correct, setCorrect] = useState(false);
+    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
 
     const addAccount = async() => {
@@ -37,6 +37,10 @@ export default function Signup (props) {
         }
     }
 
+    const showPasswordOnClick = () => {
+        setShowPassword(!showPassword);
+        console.log(showPassword)
+    }
 
 
     const onButtonClick = async() => {
@@ -73,10 +77,18 @@ export default function Signup (props) {
                         <tr>
                             <td className="title-styled">Password</td>
                             <td>
-                                <input type="password" className="input-style"
+                                <input type={showPassword ? "text": "password"} className="input-style"
                                         placeholder="Enter your password"
                                         onChange={(e) => setPassword(e.target.value)} 
                                         onKeyPress={handleEnterPress}/> 
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                            <input type='checkbox' value={showPassword} onClick={showPasswordOnClick}/>
+                            <label>Show Password</label>
                             </td>
                         </tr>
 

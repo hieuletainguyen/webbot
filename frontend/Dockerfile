@@ -16,7 +16,6 @@ ENV PORT=3000
 
 # Expose port 3000
 EXPOSE 3000
-ENV REACT_APP_BACKEND_URL=http://backend:9897
 
 # Start the application
 CMD ["npm", "start"]

@@ -6,7 +6,9 @@ import Cookies from "js-cookie";
 export default function Signin(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
+    
 
     const validate = async () => {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
@@ -57,6 +59,10 @@ export default function Signin(props) {
         validate();
     }
 
+    const showPasswordOnClick = () => {
+        setShowPassword(!showPassword);
+        console.log(showPassword)
+    }
    
 
     return (
@@ -79,12 +85,22 @@ export default function Signin(props) {
                         <tr>
                             <td className="title-styled">Password</td>
                             <td>
-                                <input type="password" className="input-style"
+                                <input type={showPassword ? "text": "password"} className="input-style"
                                         placeholder="Enter your password"
                                         onChange={(e) => setPassword(e.target.value)}
                                         onKeyPress={handleEnterPress}/> 
                             </td>
                         </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                            <input type='checkbox' value={showPassword} onClick={showPasswordOnClick}/>
+                            <label>Show Password</label>
+                            </td>
+                        </tr>
+
+                        
 
                     </tbody>
 
