@@ -80,45 +80,40 @@ export default function Home() {
                 <div className="card">
                     <img src="/pictures/esp32.jpeg" alt="esp32"/>
                     <div className="content">
-                        <p>Using React to create a front end afa fafa fafa fafa fafafa afafafaf afaf afafa fafa fafafafa fafaf</p>
+                        <p>Using ESP32 connecting the backend from google cloud vm to get the data for the arm from the front end </p>
                     </div>
                 </div>
 
                 <div className="card">
                     <img src="/pictures/react.jpg" alt="react"/>
+                    <p> Using react js to design UI to control the robot arm</p>
                 </div>
 
                 <div className="card">
                     <img src="/pictures/xpressjs.png" alt="xpressjs"/>
+                    <p> Using express js to design the server to connect the UI, database and robot arm</p>
                 </div>
 
                 <div className="card">
                     <img src="/pictures/mysql.png" alt="mysql"/>
-                    
-                    <p>adsfasrgteg</p>
-                </div>
-
-                <div className="card">
-                    <img src="/pictures/opencv1.png" alt="opencv1"/>
-                    <p>adfafgrcgr</p>
+                    <div>
+                        <p>Design the database to store</p>
+                        <p>- booking schedule</p>
+                        <p>- user accounts</p>
+                        <p>- videos</p>
+                        <p>- images</p>
+                    </div>
                 </div>
 
                 <div className="card">
                     <img src="/pictures/gcp.jpg" alt="gcp"/>
-                    <p>adfafgrcgr</p>
+                    <p>Using the Google Cloud Virtual Machine to put the server and database on the Cloud</p>
                 </div>
-
-
-                <div className="card">
-                    <img src="/pictures/iot.jpg" alt="gcp"/>
-                    <p>adfafgrcgr</p>
-                </div>
-
                
 
                 <div className="card">
-                    <img src="/pictures/docker.png" alt="docker-compose"/>
-                    <p>adfafgrcgr</p>
+                    <img src="/pictures/docker.png" alt="docker"/>
+                    <p>Using Docker to dockerize the website</p>
                 </div>
 
             </div>

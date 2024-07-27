@@ -81,13 +81,6 @@ function BookingCalendar () {
             setRobot('');
             navigate('/booking-calendar')
         }
-        else if (data.message === "Must only one slot") {
-            alert("You can only book one robot at a one timeslot")
-            setDate("");
-            setTime('');
-            setRobot('');
-            navigate('/booking-calendar')
-        }
         
         else {
             console.log(data);
@@ -100,8 +93,11 @@ function BookingCalendar () {
             <div className="left-frame">
                 <h1>Booking appointment</h1>
                 <div className="booking-calendar">
-                    <Calendar onChange={handleChangeDate} value={date} />
 
+                    <Calendar onChange={handleChangeDate} value={date} />
+                    <div>
+                        NOTE: You are only allowed to book 1 robot per time slot.
+                    </div>
                 </div>
 
                 {date && time && robot && 
@@ -114,6 +110,8 @@ function BookingCalendar () {
                 </div>
 
                 }
+
+                
             </div>
             {date && 
                 <div className="right-frame">

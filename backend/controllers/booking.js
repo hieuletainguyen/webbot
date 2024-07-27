@@ -3,6 +3,9 @@ const database = require("../database/db");
 const jwt = require("jsonwebtoken")
 const {jwtSecretkey } = require("../secret-data");
 
+const validTime = ["9:00 AM","11:00 AM", "1:00 PM","3:00 PM","5:00 PM","7:00 PM"];
+const validRobotOption = ["robot_1", "robot_2", "robot_3", "robot_4", "robot_5", "robot_6"];
+
 const bookRobot = (req, res) => {
     const errors = validationResult(req);
     const {token, date, time, robot} = req.body;
@@ -16,24 +19,25 @@ const bookRobot = (req, res) => {
             if (err) throw err;
 
             if (result.length === 1) {
-                const booked_timeslot = "SELECT * FROM booking_schedule WHERE email = ? AND date = ? AND time = ?";
-                database.query(booked_timeslot, [decode.email, date, time], (err, result) => {
-                    if (err) throw err;
+                if (validTime.includes(time) && validRobotOption.includes(robot)){ 
+                    const query_book = ` INSERT INTO booking_schedule (email, date, time, robot_option) 
+                                            SELECT ?, ?, ?, ? 
+                                            FROM DUAL
+                                            WHERE NOT EXISTS (
+                                                SELECT 1
+                                                FROM booking_schedule
+                                                WHERE email = ? AND date = ? AND time = ?
+                                            )`;
 
-                    if (result.length === 0) {
-                        const query_book = "INSERT INTO booking_schedule (email, date, time, robot_option) VALUES (?, ?, ?, ?)";
-                        database.query(query_book, [decode.email, date, time, robot], (err, result) => {
-                            if (err) throw err;
-                            res.status(200).json({ message: "Booking Success" });
-                        })
-                    } else {
-                        res.status(400).json({ message: "Must only one slot" });
-                    }
+                    database.query(query_book, [decode.email, date, time, robot, decode.email, date, time], (err, result) => {
+                        if (err) throw err;
 
-                })
+                        res.status(200).json({ message: "Booking Success" });
 
-                
-
+                    })
+                } else {
+                    res.status(400).json({ message: "Invalid Time or Robot Option" });
+                }
             }
         })
     }
