@@ -2,10 +2,11 @@
 #include <HTTPClient.h>
 #include <WireGuard-ESP32.h>
 #include <ArduinoJson.h>
+#include <config.h>
 
-const char* ssid = "Agiat Ikazinat";
-const char* password = "whaleclysdeo";
-String serverName = "http://34.71.112.134:9897/get-arm-data";
+const char* ssid = WIFI_SSID;
+const char* password = WIFI_PASSWORD;
+String serverName = "http://" + SERVER_IP + ":9897/get-arm-data";
 
 void setup() {
   Serial.begin(115200);

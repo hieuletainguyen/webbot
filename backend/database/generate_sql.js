@@ -55,6 +55,6 @@ sqlStatement.push(`
 `);
 
 
-fs.writeFileSync("../../postgresql-init/init.sql", sqlStatement.join("\n"), 'utf8');
+fs.writeFileSync("../../mysql-init/init.sql", sqlStatement.join("\n"), 'utf8');
 
 console.log("SQL Script generated done!");

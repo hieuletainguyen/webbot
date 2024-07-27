@@ -30,7 +30,7 @@ services:
       - DB_HOST=mysql-container
       - DB_USER=${MYSQLDB_USER}
       - DB_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
-      - DB_NAME=${MYSQLDB_DATABASES}
+      - DB_NAME=robot_accounts
       - FRONTEND_URL=http://localhost:3000 
     networks:
       - app-network
@@ -42,12 +42,12 @@ services:
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_DATABASE=robot_accounts
     ports:
-      - "3306:3306"
+      - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
     volumes:
       - db:/var/lib/mysql
-      - ./postgresql-init:/docker-entrypoint-initdb.d
+      - ./mysql-init:/docker-entrypoint-initdb.d
     networks:
       - app-network
   

@@ -1,3 +1,4 @@
 node_modules
 secret-data.js
 .env
+config.h
