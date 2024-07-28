@@ -8,7 +8,7 @@ In this project, I use frontend on local machine, backend and database on google
 
 <h3> Camera </h3>
 
-![Watch the video](http://img.youtube.com/vi/bBWBW29MAxo/mqdefault.jpg)
+[![Watch the video](http://img.youtube.com/vi/bBWBW29MAxo/mqdefault.jpg)](https://youtu.be/bBWBW29MAxo)
 
 
 
