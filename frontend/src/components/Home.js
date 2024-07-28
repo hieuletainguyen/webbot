@@ -17,7 +17,7 @@ export default function Home() {
                     <h1 className="block2">Robot Arm</h1>
                     <div className="description2">
                                 
-                        <img className="sub-block-img" alt="robot-arm" src="/pictures/robot_6.jpg" />
+                        <img className="sub-block-img" alt="robot-arm" src="/pictures/my_robot_arm.jpeg" />
                         
                         <table>
                             <tbody>
@@ -102,10 +102,10 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="card">
+                {/* <div className="card">
                     <img src="/pictures/gcp.jpg" alt="gcp"/>
                     <p>Using the Google Cloud Virtual Machine to put the server and database on the Cloud</p>
-                </div>
+                </div> */}
                
 
                 <div className="card">

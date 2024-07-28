@@ -1,9 +1,7 @@
 import {useState} from "react";
 import "./Signup-in.css";
-import {useNavigate} from "react-router-dom";
 
 function ForgotPassword (props) {
-    const allowedToReset = props.allowedToReset;
     const [email, setEmail] = useState('');
 
     const validate = async () => {
