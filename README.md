@@ -6,9 +6,15 @@ In this project, I use frontend on local machine, backend and database on google
 
 <h2> Features </h2>
 
+<h3> Camera </h3>
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=bBWBW29MAxo" target="_blank">
+ <img src="http://img.youtube.com/vi/bBWBW29MAxo/mqdefault.jpg" alt="Watch the video" width="75%" height="100%" border="10" />
+</a>
+
 <h3> Control </h3>
 
-<h3> Camera </h3>
+
 
 <h3> Booking Schedule </h3>
 
