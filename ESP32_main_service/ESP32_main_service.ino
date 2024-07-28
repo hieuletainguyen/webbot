@@ -2,14 +2,14 @@
 #include <HTTPClient.h>
 #include <WireGuard-ESP32.h>
 #include <ArduinoJson.h>
-#include <config.h>
+#include "config.h"
 #include <ESP32Servo.h>
 #include <ArduinoJson.h>
 
 
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
-String serverName = "http://" + SERVER_IP + ":9897/get-arm-data";
+String serverName = "http://172.20.10.3:9897/get-arm-data";
 
 Servo baseservo; 
 Servo arm1servo;
@@ -18,12 +18,12 @@ Servo clawyservo;
 Servo clawzservo;
 Servo end_effector;
 // Servo GPIO pin
-int base = 14;
-int arm1 = 17;
+int base = 22;
+int arm1 = 18;
 int arm2 = 19;
-int clawy = 16;
-int clawz = 13;
-int ee = 15;
+int clawy = 5;
+int clawz = 15;
+int ee = 21;
 
 void setup() {
   Serial.begin(115200);
@@ -90,10 +90,10 @@ void loop() {
       end_effector.write(doc["ee"]);
 
     } else {
-      Serial.println("Error on HTTP request");
+      Serial.println(httpCode);
     }
 
     http.end(); // Free the resources
   }
-  delay(10000); // Send a request every 10 seconds
+  delay(2000); // Send a request every 2 seconds
 }

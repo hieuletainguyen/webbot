@@ -22,7 +22,7 @@ sqlStatement.push(`
     CREATE TABLE IF NOT EXISTS images (
         id INT AUTO_INCREMENT,
         email VARCHAR(50),
-        image BLOB NOT NULL, 
+        image LONGBLOB NOT NULL, 
         time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     );

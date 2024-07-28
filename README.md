@@ -4,6 +4,16 @@
 
 In this project, I use frontend on local machine, backend and database on google cloud vm and ESP32 will connect to the google cloud vm
 
+<h2> Features </h2>
+
+<h3> Control </h3>
+
+<h3> Camera </h3>
+
+<h3> Booking Schedule </h3>
+
+Using the 
+
 <h2>Before running </h2>
 
 Need to create an .env file in the main directory
