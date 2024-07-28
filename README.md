@@ -7,8 +7,11 @@ In this project, I use frontend on local machine, backend and database on google
 <h2> Features </h2>
 
 <h3> Camera </h3>
+<div align="center">
 
-[![Watch the video](http://img.youtube.com/vi/bBWBW29MAxo/mqdefault.jpg)](https://youtu.be/bBWBW29MAxo)
+[![](http://markdown-videos-api.jorgenkh.no/youtube/bBWBW29MAxo)](https://youtu.be/bBWBW29MAxo)
+</div>
+
 
 
 
