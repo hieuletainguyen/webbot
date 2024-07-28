@@ -2,25 +2,26 @@
 
 <h2>Description </h2>
 
-In this project, I use frontend, backend, database and ESP32 on local machine.
+WebBot is a versatile project that integrates a web interface with a robotic system. Using React for the frontend and Node.js for the backend, it allows users to remotely control a robot arm via a browser. The project demonstrates real-time control and interaction, with functionalities for scheduling control sessions and monitoring through a camera feed.
 
 <h2> Features </h2>
 
 <h3> Camera </h3>
+View the robot's surroundings in real time
 <div align="center">
-
+    
 [![](http://markdown-videos-api.jorgenkh.no/youtube/bBWBW29MAxo)](https://youtu.be/bBWBW29MAxo)
 </div>
 
 <h3> Control </h3>
-
+Operate the robot arm from any web browser
 <div align="center">
 
 [![](http://markdown-videos-api.jorgenkh.no/youtube/uBf7McVt6SU)](https://youtu.be/uBf7McVt6SU)
 </div>
 
 <h3> Booking Schedule and Reset password</h3>
-
+Book time slots for controlling the robot. 
 <div align="center">
 
 [![](http://markdown-videos-api.jorgenkh.no/youtube/tP2ydQP_NOY)](https://youtu.be/tP2ydQP_NOY)
@@ -94,6 +95,37 @@ module.exports = {
 For the myEmailPassword, it is ***NOT YOUR EMAIL PASSWORD***. 
 
 It is obtained by go to *Google Account -> Security -> Enable 2-Step Verification -> App passwords -> Create a new app password*
+
+<h2>Getting Started</h2>
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/hieuletainguyen/webbot.git
+    ```
+2. Navigate to the project directory:
+    ```bash
+    cd webbot
+    ```
+3. Navigate to the frontend directory and install dependencies:
+    ```bash
+    cd frontend
+    npm install
+    ```
+3. Navigate back to the project directory, go to the backend directory and install dependencies:
+    ```bash
+    cd ../
+    cd backend
+    npm install
+    ```
+4. Complete the ***Before running*** step above
+5. Navigate back to the project directory and start the docker compose:
+   ```bash
+   docker compose up -d
+   ```
+6. Stop the docker containers, remove all created images and volumes:
+   ```bash
+   docker compose down --rmi all -v
+   ```
 
 
 
