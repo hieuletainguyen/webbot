@@ -2,7 +2,7 @@
 
 <h2>Description </h2>
 
-In this project, I use frontend on local machine, backend and database on google cloud vm and ESP32 will connect to the google cloud vm
+In this project, I use frontend, backend, database and ESP32 on local machine.
 
 <h2> Features </h2>
 
@@ -12,16 +12,19 @@ In this project, I use frontend on local machine, backend and database on google
 [![](http://markdown-videos-api.jorgenkh.no/youtube/bBWBW29MAxo)](https://youtu.be/bBWBW29MAxo)
 </div>
 
-
-
-
 <h3> Control </h3>
 
+<div align="center">
 
+[![](http://markdown-videos-api.jorgenkh.no/youtube/uBf7McVt6SU)](https://youtu.be/uBf7McVt6SU)
+</div>
 
-<h3> Booking Schedule </h3>
+<h3> Booking Schedule and Reset password</h3>
 
-Using the 
+<div align="center">
+
+[![](http://markdown-videos-api.jorgenkh.no/youtube/tP2ydQP_NOY)](https://youtu.be/tP2ydQP_NOY)
+</div>
 
 <h2>Before running </h2>
 
