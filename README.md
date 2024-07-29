@@ -27,6 +27,16 @@ Book time slots for controlling the robot.
 [![](http://markdown-videos-api.jorgenkh.no/youtube/tP2ydQP_NOY)](https://youtu.be/tP2ydQP_NOY)
 </div>
 
+<h2>ESP32 Pins</h2>
+
+This is my set up for the ESP32 with servo motors. 
+<div align="center">
+
+<img src="./pictures/esp32.jpeg" width="30%" height="30%"/>
+
+![esp32_pin_table](https://github.com/user-attachments/assets/ec1262da-7ad2-4a88-81af-b6216f3c09d0)
+</div>
+
 <h2>Before running </h2>
 
 Need to create an .env file in the main directory
