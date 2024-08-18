@@ -82,8 +82,6 @@ function App() {
 
           {!isLoggedIn.status && <Route path="/sign-up" element={<Signup />} />}
 
-          <Route path="/profile" element={<UserProfile />} />
-
           <Route path="/code-space" element={<CodingSpace /> } />
 
           {isLoggedIn.status && <Route path="/gallery" element={<Gallery />} />}
