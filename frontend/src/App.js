@@ -28,7 +28,7 @@ function App() {
     "ee": 49
   })
   const [isLoggedIn, setIsLoggedIn] = useState({
-    status: false,
+    status: true,
     username: null
   })
 
@@ -81,8 +81,6 @@ function App() {
           {!isLoggedIn.status && <Route path="/sign-in" element={<Signin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>} />}
 
           {!isLoggedIn.status && <Route path="/sign-up" element={<Signup />} />}
-
-          <Route path="/code-space" element={<CodingSpace /> } />
 
           {isLoggedIn.status && <Route path="/gallery" element={<Gallery />} />}
 
