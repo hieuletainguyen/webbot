@@ -10,7 +10,6 @@ import NavBar from "./components/NavigatorBar";
 import Controller from "./components/Controller";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
-import UserProfile from "./components/UserProfile";
 import BookingCalendar from "./components/BookingCalendar";
 import MySchedule from "./components/MySchedule";
 import Gallery from "./components/Gallery";
