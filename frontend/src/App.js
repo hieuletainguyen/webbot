@@ -8,7 +8,6 @@ import {
 import Home from "./components/Home";
 import NavBar from "./components/NavigatorBar";
 import Controller from "./components/Controller";
-import CodingSpace from "./components/CodingSpace";
 import Signin from "./components/Signin";
 import Signup from "./components/Signup";
 import UserProfile from "./components/UserProfile";
